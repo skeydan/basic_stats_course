@@ -1,3 +1,10 @@
+
+# simple confidence interval around a mean
+m <- 1000
+sd <- 25
+n <- 9
+confint <- m +c(-1,1) * sd/sqrt(n) * qt(0.975,n-1)
+
 ### equal variances
 m1 <- 3
 m2 <- 5
@@ -60,3 +67,7 @@ se <- sqrt(pooled_variance_const_case) * se_n
 se
 confint_90 <- mdiff +  c(-1,1) * qt(0.95,df) * se
 confint_90
+confint_95 <- mdiff +  c(-1,1) * qt(0.975,df) * se
+confint_95
+confint_99 <- mdiff +  c(-1,1) * qt(0.995,df) * se
+confint_99
