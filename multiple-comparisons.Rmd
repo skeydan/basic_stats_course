@@ -1,0 +1,22 @@
+---
+title: "multiple_comparisons"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bonferroni 
+
+* control the family-wise error rate (FWER) at level alpha
+* dividing alpha by the total number of tests performed
+* may be too conservative
+
+## Benjamini-Hochberg
+
+* control the false discovery rate at level alpha
+* calculate the p-values as usual
+* order them from smallest to largest, $p_1, p_2,...p_m$.
+* any result with $p_i <= \frac{(alpha*i)}{m}$ is declared significant
+

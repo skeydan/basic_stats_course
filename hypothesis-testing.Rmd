@@ -1,0 +1,22 @@
+---
+title: "hypothesis_testing"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+after: http://en.wikipedia.org/wiki/Familywise_error_rate
+
+action/truth                | $\mathbf{H_0}$ is true   | $\mathbf{H_1}$ is true   | total
+-------------               | -------------            | -------------            | ---
+__$\mathbf{H_1}$ accepted__ | $V$                      | $S$                      | $R$
+__$\mathbf{H_1}$ rejected__ | $U$                      | $T$                      | $n - R$
+__total__                   | $n_0$                    | $n - n_0$                | $n$
+
+* false positive / type 1 error: $V$
+* false negative / type 2 error: $T$
+* False Discovery Rate (FDR): $V/T$
+* False positive rate: $V/m_0$
+* Family Wise Error Rate (FWER): $Pr(V >= 1)$ (at least one false positive)

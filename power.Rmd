@@ -1,0 +1,45 @@
+---
+title: "Power"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Power
+
+* probability of rejecting the null hypothesis when it is false
+* = 1 - Type 2 Error ($1 - \beta$)
+
+
+\[power = P\left(\frac{\bar X - \mu_0}{s /\sqrt{n}} > t_{1-\alpha,n-1} ~;~ \mu = \mu_a \right)\]
+
+
+## Power increases with
+
+* difference between $\mu_0$ and $\mu_a$
+* alpha level
+* sample size
+
+## Power decreases with
+
+* standard deviation
+
+## Power and effect size
+
+* with fixed alpha, power only depends on the effect size
+
+\[\frac{\mu_a - \mu_0}{\sigma}\]
+
+
+
+
+
+
+
+
+
+
+
