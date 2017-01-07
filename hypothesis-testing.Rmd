@@ -17,6 +17,14 @@ __total__                   | $n_0$                    | $n - n_0$              
 
 * false positive / type 1 error: $V$
 * false negative / type 2 error: $T$
-* False Discovery Rate (FDR): $V/T$
-* False positive rate: $V/m_0$
+* False Discovery Rate (FDR): $V/R$
+* False positive rate: $V/n_0$
 * Family Wise Error Rate (FWER): $Pr(V >= 1)$ (at least one false positive)
+
+* positive predictive value: 1 - FDR = $S/R$
+
+* see http://shinyapps.org/apps/PPV/ for how 
+** the percentage of actually true hypotheses, 
+** the chosen alpha, and
+** the power of the test
+interact in producing each of $U,V,S,T$

@@ -1,0 +1,23 @@
+---
+title: "effect_size"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Effect size
+
+* How strong is an effect?
+* g-family and r-family of measures
+* Typical measures: Cohen's _d_, r (correlation coefficient)
+
+## Cohen's _d_
+$$d = \frac{m_1 - m_2}{SD_{pooled}}$$ (see http://rpsychologist.com/d3/cohend/)
+* Relationship to t statistic:
+
+$$t = \frac{m_1 - m_2}{SD_{pooled} * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
+$$d = t * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
+## r and $R^2$
+* how much of variation in dependent variable is explained by independent variable ($R^2$)
