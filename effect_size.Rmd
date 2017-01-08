@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * Typical measures: Cohen's _d_, r (correlation coefficient)
 
 ## Cohen's _d_
+* difference of means, in units of standard deviation
 $$d = \frac{m_1 - m_2}{SD_{pooled}}$$ (see http://rpsychologist.com/d3/cohend/)
 * Relationship to t statistic:
 

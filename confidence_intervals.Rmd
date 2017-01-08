@@ -1,0 +1,22 @@
+---
+title: "confidence-intervals"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What is a confidence interval
+
+* 95 % confidence is a confidence that in the long-run 95 % of the CIs will include the population mean. It is a confidence in the algorithm and not a statement about a single CI.
+* In frequentist terms the CI either contains the population mean or it does not. 
+* Relationship to p-values: if an effect is statistically different ( p < 0.05) from 0 in a
+two-sided t -test with an alpha of .05, the 95% CI for the mean difference between two
+groups will not include zero.
+* Visualization: http://rpsychologist.com/d3/CI/
+
+## Calculation of CI
+* CI for a mean, using the t distribution:
+##tbd
+
