@@ -1,0 +1,8 @@
+---  
+title: Frequentist and Bayesian Statistics
+output: 
+  html_document
+---
+
+# Frequentist and Bayesian Statistics
+

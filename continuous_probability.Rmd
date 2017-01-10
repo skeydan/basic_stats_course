@@ -1,0 +1,7 @@
+---  
+  title: Continuous Probability Distributions
+output: 
+  html_document
+---
+  
+### Continuous Probability Distributions

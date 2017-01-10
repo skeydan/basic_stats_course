@@ -4,10 +4,6 @@ output:
   html_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Power
 
 * probability of rejecting the null hypothesis when it is false
@@ -21,7 +17,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * difference between $\mu_0$ and $\mu_a$
 * alpha level
-* sample size
+* sample size 
+
+Of these, can only influence sample size
 
 ## Power decreases with
 

@@ -3,6 +3,10 @@ title: "hypothesis_testing"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 after: http://en.wikipedia.org/wiki/Familywise_error_rate
 
 action/truth                | $\mathbf{H_0}$ is true   | $\mathbf{H_1}$ is true   | total

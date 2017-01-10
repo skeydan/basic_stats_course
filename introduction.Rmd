@@ -1,0 +1,10 @@
+---  
+title: Introduction
+output: 
+  html_document
+---
+
+# Introduction
+
+Frequentist vs. Bayesian Statistics
+

@@ -1,0 +1,10 @@
+---  
+title: Probability
+output: 
+  html_document
+---
+
+# Probability
+
+## Axioms of probability
+

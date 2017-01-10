@@ -1,0 +1,12 @@
+---  
+  title: Discrete Probability Distributions
+output: 
+  html_document
+---
+  
+  
+## Probability Distributions
+  
+  bla
+
+### Discrete Probability Distributions

@@ -3,10 +3,6 @@ title: "confidence-intervals"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## What is a confidence interval
 
 * 95 % confidence is a confidence that in the long-run 95 % of the CIs will include the population mean. It is a confidence in the algorithm and not a statement about a single CI.
@@ -20,3 +16,33 @@ groups will not include zero.
 * CI for a mean, using the t distribution:
 ##tbd
 
+
+## Prediction intervals
+* Even though 95% of future confidence intervals will contain the true parameter, a 95%
+confidence interval will not contain 95% of future individual observations.
+* It is always much wider than a confidence interval. The reason is
+7that individual observations can vary substantially, but means of future samples (which
+fall within a normal confidence interval 95% of the time) will vary much less
+
+## Calculation of CI
+* CI for a mean, using the t distribution:
+##tbd
+Standard Error (SE) = σ*√(1+1/N)
+
+## One thing people find difficult to understand is why a 95% confidence interval does not
+provide us with the interval where 95% of future means will fall. The % of means that falls
+within a single confidence interval is called the capture percentage. A 95% confidence
+interval is only a 95% capture percentage when the statistic (such as an effect size) you
+observe in a single sample happens to be exactly the same as the true parameter. This
+situation is illustrated in the picture below. The observed effect size (dot) falls exactly on
+the true effect size (vertical dotted line). In this case, and only in this case , 95% of future
+means will fall within this 95% confidence interval.
+So, the percentage of future means that fall within a single
+confidence interval depends upon which single confidence interval you happened to
+observe! In the long run, a 95% CI has an 83.4% capture probability (Cumming &
+Maillardet, 2006).
+The simulation
+returns the number of CI that contains the mean (which should be 95% in the long run).
+The simulation also returns the % of means from future studies that fall within the 95%
+of the original study, or the capture percentage. It differs from (and is often lower, but
+sometimes higher, than) the confidence interval.

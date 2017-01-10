@@ -1,0 +1,64 @@
+
+---  
+title: Dive into Statistics  
+output: 
+  html_document:
+    toc: yes 
+    depth: 2
+    number_sections: true
+---
+
+```{r child = 'freq_bayes.Rmd'}
+```
+
+  
+```{r child = 'probability.Rmd'}
+```
+
+```{r child = 'conditional_probability.Rmd'}
+```
+
+```{r child = 'discrete_probability.Rmd'}
+```
+
+```{r child = 'continuous_probability.Rmd'}
+```
+
+
+```{r child = 'cumulative_distribution_functions.Rmd'}
+```
+
+
+```{r child = 'expected_values.Rmd'}
+```
+
+
+```{r child = 'clt.Rmd'}
+```
+
+
+```{r child = 'hypothesis_testing.Rmd'}
+```
+
+
+```{r child = 'confidence_intervals.Rmd'}
+```
+
+
+```{r child = 'pvalues.Rmd'}
+```
+
+
+```{r child = 'effect_size.Rmd'}
+```
+
+
+```{r child = 'multiple_comparisons.Rmd'}
+```
+
+```{r child = 'bayesian.Rmd'}
+```
+
+```{r child = 'lreg.Rmd'}
+```
+

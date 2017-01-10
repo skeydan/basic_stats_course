@@ -3,10 +3,6 @@ title: "pvalues"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## p-value
 
 The p-value is the probability under the null hypothesis of obtaining evidence as or more extreme than the test statistic obtained from the observed data, in the direction of the alternative hypothesis.

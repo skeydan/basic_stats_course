@@ -1,0 +1,9 @@
+---  
+  title: The Bayesian Way
+output: 
+  html_document
+---
+  
+# The Bayesian Way
+  
+  

@@ -1,0 +1,14 @@
+---  
+  title: Conditional Probability
+output: 
+  html_document
+---
+
+
+## Conditional Probability
+
+bla
+
+## Bayes Theorem
+
+bla
