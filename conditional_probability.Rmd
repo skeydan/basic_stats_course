@@ -1,5 +1,5 @@
 ---  
-  title: Conditional Probability
+title: Conditional Probability
 output: 
   html_document
 ---
@@ -7,7 +7,16 @@ output:
 
 ## Conditional Probability
 
-bla
+* Probabilities change when _conditioning_ on additional information.
+* Probability of \(A\) given \(B\):
+
+$$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)}$$
+
+* Compare
+    + general probability of being struck by lightning vs.
+    + probability of being struck by lightning, provided you go out in the woods in a heavy thunderstorm
+
+
 
 ## Bayes Theorem
 

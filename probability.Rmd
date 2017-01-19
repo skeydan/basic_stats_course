@@ -4,7 +4,32 @@ output:
   html_document
 ---
 
+&nbsp;
+
+
 # Probability
 
-## Axioms of probability
+&nbsp;
+
+## Fundamental axioms of probability (Kolmogorov)
+
+1. The probability of any event is a positive real number.
+2. The probability that _some_ event will occur is 1.
+3. For any two disjoint events or sets of events \(e\) and \(f\), the probability of \(e\) _or_ \(f\) occurring is \(P(e) + P(f)\).
+
+&nbsp;
+
+## Adding probabilities (OR): \(P(A\cup B)\)
+
+* Disjoint events (see axiom 3 above): $$P(A\cup B)=P(A)+P(B)$$
+* Non-disjoint events: $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
+
+&nbsp;
+
+## Multiplying probabilities (AND): \(P(A\cap B)\)
+
+* Events are _independent_ if
+$$P(A \cap B) = P(A)P(B)$$
+
+
 
