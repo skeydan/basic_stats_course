@@ -19,14 +19,23 @@ output:
 
 &nbsp;
 
-## Adding probabilities (OR): \(P(A\cup B)\)
+## Probability of event A __OR__ event B happening: \(P(A\cup B)\)
 
 * Disjoint events (see axiom 3 above): $$P(A\cup B)=P(A)+P(B)$$
 * Non-disjoint events: $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
 
 &nbsp;
 
-## Multiplying probabilities (AND): \(P(A\cap B)\)
+## Probability of event A __AND__ event B happening: \(P(A\cap B)\)
+
+* General formulation:
+$$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A)$$
+* For independent events:
+$$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A) = P(A) * P(B)$$
+
+&nbsp;
+
+## Independent events
 
 * Events are _independent_ if
 $$P(A \cap B) = P(A)P(B)$$

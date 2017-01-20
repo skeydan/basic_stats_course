@@ -4,20 +4,38 @@ output:
   html_document
 ---
 
+&nbsp;
 
 ## Conditional Probability
 
 * Probabilities change when _conditioning_ on additional information.
 * Probability of \(A\) given \(B\):
 
-$$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)}$$
-
-* Compare
-    + general probability of being struck by lightning vs.
-    + probability of being struck by lightning, provided you go out in the woods in a heavy thunderstorm
+$$P(A | B) = \frac{P(A \cap B)}{P(B)}$$
 
 
+* If \(A\) and \(B\) are independent:
+
+$$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
+
+&nbsp;
+
+## Conditioning matters
+
+* Probability of being struck by lightning vs. probability of being struck by lightning, provided you go out in the woods in a heavy thunderstorm
+* Probability of contracting rare hereditary disease XYZ vs. probability of contracting rare hereditary disease XYZ, given parents have it
+
+&nbsp;
 
 ## Bayes Theorem
 
-bla
+* Prior probability \(P(A)\)
+* Likelihood \(P(B|A)\)
+* Evidence \(P(B)\)
+* Posterior probability \(P(A)\)
+
+$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+
+* Classical examples: Medical test,
+
+&nbsp;

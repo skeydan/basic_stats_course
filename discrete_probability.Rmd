@@ -1,12 +1,92 @@
 ---  
-  title: Discrete Probability Distributions
+title: Discrete Probability Distributions
 output: 
   html_document
 ---
   
   
-## Probability Distributions
-  
-  bla
+## Random Variables and Probability Distributions
 
-### Discrete Probability Distributions
+* A random variable models the numerical outcome of an experiment
+* Random variables come in two flavours:
+    + discrete: can take on only a countable number of possibilities
+    + continuous: can take any value on [a subset of] the real number line 
+* Discrete random variables have probability mass functions
+    + every possible outcome is assigned a probability
+* Continuous random variables have probability density functions
+    + probability at any given _point_ is 0, can only meaningfully specify probabilities for _intervals_
+
+## Discrete Probability Distributions
+
+
+### Bernoulli Distribution
+
+* outcome is binary with values 0 or 1
+* p = probability of success (1)
+* examples: coin flips,
+
+$$P(X = x) =  p^x (1 - p)^{1 - x}$$
+
+```{r}
+# generate 10 bernoulli random variables with p=0.5
+rbinom(10,1,0.5)
+```
+
+```{r}
+# generate 10 bernoulli random variables with p=0.2
+rbinom(10,1,0.2)
+```
+
+&nbsp;
+
+### Binomial distribution
+
+* sum of IID (independent and identically distributed) Bernoulli trials
+* n = number of trials, k = number of successes, p = probability of success
+
+$$P(X = x) = 
+\left(
+\begin{array}{c}
+  n \\ x
+\end{array}
+\right)
+p^x(1 - p)^{n-x}$$
+
+```{r}
+# generate 10 binomial random variables with 10 trials, p=0.5
+rbinom(10,10,0.2)
+```
+
+```{r}
+# generate 10 binomial random variables with 10 trials, p=0.9
+rbinom(10,10,0.9)
+```
+
+```{r}
+#How likely is it to obtain 4 success in 6 trials when p=0.1?
+dbinom(4,6,0.1)
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+# Plot various binomial distributions
+n <- 10
+k <- seq(0,10,1)
+p1 <- 0.1
+prob1 <- dbinom(k,n,p1)
+p3 <- 0.3
+prob3 <- dbinom(k,n,p3)
+p5 <- 0.5
+prob5 <- dbinom(k,n,p5)
+p9 <- 0.9
+prob9 <- dbinom(k,n,p9)
+g1 <- ggplot(data_frame(x = k, y1 = prob1)) + geom_bar(aes(x = k, y = prob1), stat="identity", fill="blue")
+g3 <- ggplot(data_frame(x = k, y1 = prob3)) + geom_bar(aes(x = k, y = prob3), stat="identity", fill="green")
+g5 <- ggplot(data_frame(x = k, y1 = prob5)) + geom_bar(aes(x = k, y = prob5), stat="identity", fill="violet")
+g9 <- ggplot(data_frame(x = k, y1 = prob9)) + geom_bar(aes(x = k, y = prob9), stat="identity", fill="cyan")
+grid.arrange(g1,g3,g5,g9, ncol=2, nrow=2)
+```
+

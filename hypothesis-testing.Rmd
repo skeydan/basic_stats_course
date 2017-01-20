@@ -11,16 +11,33 @@ __$\mathbf{H_1}$ accepted__ | $V$                      | $S$                    
 __$\mathbf{H_1}$ rejected__ | $U$                      | $T$                      | $n - R$
 __total__                   | $n_0$                    | $n - n_0$                | $n$
 
-* false positive / type 1 error: $V$
-* false negative / type 2 error: $T$
-* False Discovery Rate (FDR): $V/R$
-* False positive rate: $V/n_0$
-* Family Wise Error Rate (FWER): $Pr(V >= 1)$ (at least one false positive)
+&nbsp;
 
-* positive predictive value: 1 - FDR = $S/R$
+## Commonly used metrics
 
-* see http://shinyapps.org/apps/PPV/ for how 
-** the percentage of actually true hypotheses, 
-** the chosen alpha, and
-** the power of the test
+* False Positive / __Type 1 error__: $V$
+* False Negative / __Type 2 error__: $T$
+* False Discovery Rate (__FDR__): $\frac{V}{R}$
+* False Positive Rate (__FPR__): $\frac{V}{n_0}$
+* Family Wise Error Rate (__FWER__): $Pr(V >= 1)$ (at least one false positive)
+* Positive Predictive Value (__PPV__): 1 - FDR = $\frac{S}{R}$
+
+&nbsp;
+
+## Related metrics (used in e.g. retrieval, pattern recognition, data science)
+
+* __Sensitivity__ / Recall / True Positive Rate: proportion of correctly detected positives, $\frac{S}{n - n_0}$
+* __Specificity__ / True Negative Rate: proportion of negatives correctly identified as such, $\frac{U}{n_0}$
+* __Precision__: proportion of accepted instances that are correct, $\frac{S}{R}$ (= Positive Predictive Value)
+* __Accuracy__: proportion classified correctly, $\frac{S + U}{n}$
+* see also: https://en.wikipedia.org/wiki/Precision_and_recall
+
+&nbsp;
+
+## Demo
+* http://shinyapps.org/apps/PPV/ 
+* see how  
+    + the percentage of actually true hypotheses, 
+    + the chosen alpha, and
+    + the power of the test
 interact in producing each of $U,V,S,T$
