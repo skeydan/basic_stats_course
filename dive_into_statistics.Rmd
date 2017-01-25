@@ -18,6 +18,11 @@ output:
 ```{r child = 'conditional_probability.Rmd'}
 ```
 
+
+```{r child = 'expected_values.Rmd'}
+```
+
+
 ```{r child = 'discrete_probability.Rmd'}
 ```
 
@@ -28,9 +33,6 @@ output:
 ```{r child = 'cumulative_distribution_functions.Rmd'}
 ```
 
-
-```{r child = 'expected_values.Rmd'}
-```
 
 
 ```{r child = 'clt.Rmd'}

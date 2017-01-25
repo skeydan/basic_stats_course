@@ -4,22 +4,26 @@ output:
   html_document
 ---
   
-## Continuous Probability Distributions
+## Some continuous probability distributions
 
 
 ### Uniform Distribution
 
 * valid between a minimum and a maximum value
 * all intervals _of the same length_ between the minimum and the maximum values are equally probable
+
+$$ P(X = x; a,b) = \frac{1}{b - a}, x \in [a,b]$$
+
 * application: often used as a prior distribution when we have no prior knowledge
 * examples for discrete version of uniform distribution: die rolls
+* mean: $\frac{1}{2} (a+b)$
+* variance: $\frac{1}{12}(b-a)^2$
 
 ```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(dplyr)
 library(gridExtra)
 
-# Plot various binomial distributions
 n <- 10
 k <- seq(0,10,0.01)
 minval = 3
@@ -28,3 +32,37 @@ prob = dunif(k, minval, maxval)
 ggplot(data_frame(x = k, y = prob), aes(x, y)) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
   ggtitle("Uniform distribution example")
 ```
+
+
+### Normal / Gaussian Distribution
+
+* the famous "bell curve"
+* characterized by mean $\mu$ and variance $\sigma^2$:
+
+$$ P(X = x; \mu, \sigma^2) = (2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}$$
+* mean: $\mu$
+* variance: $\sigma^2$
+
+* examples: 
+
+Compare normal distributions with different variances:
+
+```{r, warning=FALSE, message=FALSE}
+library(ggfortify)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
+ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
+```
+
+Why are so many processes / variables normally distributed?
+
+
+If $\mu = 0, \sigma^2 =1$, we have a _standard normal_ istribution.
+
+```{r}
+x <- seq(-4, 4, 0.1)
+y <- dnorm(x,0,1)
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dnorm, args = list(mean = 0, sd =1))
+```
+
+The standard normal is tremendously important in statistics, as 

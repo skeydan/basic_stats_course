@@ -5,27 +5,20 @@ output:
 ---
   
   
-## Random Variables and Probability Distributions
-
-* A random variable models the numerical outcome of an experiment
-* Random variables come in two flavours:
-    + discrete: can take on only a countable number of possibilities
-    + continuous: can take any value on [a subset of] the real number line 
-* Discrete random variables have probability mass functions
-    + every possible outcome is assigned a probability
-* Continuous random variables have probability density functions
-    + probability at any given _point_ is 0, can only meaningfully specify probabilities for _intervals_
-
-## Discrete Probability Distributions
+## Some discrete probability distributions
 
 
 ### Bernoulli Distribution
 
 * outcome is binary with values 0 or 1
-* p = probability of success (1)
+* parameter(s): p = probability of success (1)
 * examples: coin flips, rain vs. no rain, ...
+* distribution:
 
-$$P(X = x) =  p^x (1 - p)^{1 - x}$$
+$$P(X = x; p) =  p^x (1 - p)^{1 - x}$$
+* mean: $p$
+* variance: $p * (1-p)$
+
 
 ```{r}
 # generate 10 bernoulli random variables with p=0.5
@@ -43,15 +36,18 @@ rbinom(10,1,0.2)
 
 * sum of IID (independent and identically distributed) Bernoulli trials
 * examples: number of tails in 5 coin flips, number of leads closed, ...
-* n = number of trials, k = number of successes, p = probability of success
+* parameter(s): n = number of trials, k = number of successes, p = probability of success
 
-$$P(X = x) = 
+$$P(X = x; n,p) = 
 \left(
 \begin{array}{c}
   n \\ x
 \end{array}
 \right)
 p^x(1 - p)^{n-x}$$
+
+* mean: $np$
+* variance: $np(1-p)$
 
 ```{r}
 # generate 10 binomial random variables with 10 trials, p=0.2
@@ -101,9 +97,12 @@ grid.arrange(g1,g3,g5,g9, ncol=2, nrow=2, top="Binomial distributions for differ
 * used to model counts
 * examples: number of add clicks per time interval, number of laptop crashes, ...
 * with n very large and p very small, is an accurate approximation of the binomial distribution
-* $\lambda$ = mean and variance of the distribution (see later)
+* parameter(s): $\lambda$ = mean and variance of the distribution 
 
 $$P(X = x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}$$
+
+* mean: $\lambda$
+* variance: $\lambda$
 
 ```{r, warning=FALSE, message=FALSE}
 # Plot various Poisson distributions

@@ -41,4 +41,13 @@ $$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A) = P(A) * P(B)$$
 $$P(A \cap B) = P(A)P(B)$$
 
 
+## Random Variables and Probability Distributions
 
+* A random variable models the numerical outcome of an experiment
+* Random variables come in two flavours:
+    + discrete: can take on only a countable number of possibilities
+    + continuous: can take any value on [a subset of] the real number line 
+* Discrete random variables have probability mass functions
+    + every possible outcome is assigned a probability
+* Continuous random variables have probability density functions
+    + probability at any given _point_ is 0, can only meaningfully specify probabilities for _intervals_

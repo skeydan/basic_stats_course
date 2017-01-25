@@ -1,7 +1,94 @@
 ---  
-  title: Expected values
+title: Expected values
 output: 
   html_document
 ---
-  
-## Expected values
+
+## Statistical inference and expected values
+
+In the "real world", we mostly do not have access to the "true" probability distribution.
+
+Instead, we _estimate_ characteristics of the _population_ from a _sample_.
+
+Concretely, we estimate _expected values_ of a population from _sample statistics_:
+
+* population mean from sample mean
+* population variance from sample variance
+
+
+### Mean / expected value of a distribution
+
+The expected mean $E[X] = \sum_x x*p(x)$ of a discrete probability distribution is estimated from the sample mean $\bar X = \sum_{i=1}^n x_i  * p(x_i)$.
+
+The sample mean is the center of mass of the observed values.
+
+
+### Example: Calculating means with R
+
+```{r}
+# roll dice 6 times
+roll_dice <- sample(1:6, 6, replace = TRUE)
+roll_dice
+mean(roll_dice)
+
+# roll dice 60 times
+roll_dice <- sample(1:6, 60, replace = TRUE)
+mean(roll_dice)
+
+# roll dice 600 times
+roll_dice <- sample(1:6, 600, replace = TRUE)
+mean(roll_dice)
+```
+
+
+### Variance 
+
+The variance indicates how spread out a distribution is.
+
+Compare:
+
+```{r, warning=FALSE, message=FALSE}
+library(ggfortify)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
+ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
+```
+
+Again, we distinguish between population variance and sample variance.
+
+The population variance is defined as
+
+$$Var(X) = E[(X - \mu)^2] = E[X^2] - E[X]^2$$
+
+The sample variance is
+$$S^2 = \frac{\sum_{i=1} (X_i - \bar X)^2}{n-1}$$
+
+
+### Example: Calculating variances with R
+
+```{r}
+# roll dice 6 times
+roll_dice <- sample(1:6, 6, replace = TRUE)
+roll_dice
+var(roll_dice)
+
+# roll dice 60 times
+roll_dice <- sample(1:6, 60, replace = TRUE)
+var(roll_dice)
+
+# roll dice 600 times
+roll_dice <- sample(1:6, 600, replace = TRUE)
+var(roll_dice)
+```
+
+### Standard deviation
+
+The square root of the variance is called the _standard deviation_.
+
+* In contrast to the variance, the standard deviation has the same unit as the data (and the mean)
+* In R:
+```{r}
+roll_dice <- sample(1:6, 600, replace = TRUE)
+paste0("Variance: ", var(roll_dice), ", standard deviation: ", sd(roll_dice))
+```
+
