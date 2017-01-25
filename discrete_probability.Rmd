@@ -23,7 +23,7 @@ output:
 
 * outcome is binary with values 0 or 1
 * p = probability of success (1)
-* examples: coin flips,
+* examples: coin flips, rain vs. no rain, ...
 
 $$P(X = x) =  p^x (1 - p)^{1 - x}$$
 
@@ -42,6 +42,7 @@ rbinom(10,1,0.2)
 ### Binomial distribution
 
 * sum of IID (independent and identically distributed) Bernoulli trials
+* examples: number of tails in 5 coin flips, number of leads closed, ...
 * n = number of trials, k = number of successes, p = probability of success
 
 $$P(X = x) = 
@@ -53,7 +54,7 @@ $$P(X = x) =
 p^x(1 - p)^{n-x}$$
 
 ```{r}
-# generate 10 binomial random variables with 10 trials, p=0.5
+# generate 10 binomial random variables with 10 trials, p=0.2
 rbinom(10,10,0.2)
 ```
 
@@ -83,10 +84,70 @@ p5 <- 0.5
 prob5 <- dbinom(k,n,p5)
 p9 <- 0.9
 prob9 <- dbinom(k,n,p9)
-g1 <- ggplot(data_frame(x = k, y1 = prob1)) + geom_bar(aes(x = k, y = prob1), stat="identity", fill="blue")
-g3 <- ggplot(data_frame(x = k, y1 = prob3)) + geom_bar(aes(x = k, y = prob3), stat="identity", fill="green")
-g5 <- ggplot(data_frame(x = k, y1 = prob5)) + geom_bar(aes(x = k, y = prob5), stat="identity", fill="violet")
-g9 <- ggplot(data_frame(x = k, y1 = prob9)) + geom_bar(aes(x = k, y = prob9), stat="identity", fill="cyan")
-grid.arrange(g1,g3,g5,g9, ncol=2, nrow=2)
+g1 <- ggplot(data_frame(x = k, y1 = prob1)) + geom_bar(aes(x = k, y = prob1), stat="identity", fill="blue") +
+  ylab("p = 0.1")
+g3 <- ggplot(data_frame(x = k, y1 = prob3)) + geom_bar(aes(x = k, y = prob3), stat="identity", fill="green") +
+  ylab("p = 0.3")
+g5 <- ggplot(data_frame(x = k, y1 = prob5)) + geom_bar(aes(x = k, y = prob5), stat="identity", fill="violet") +
+  ylab("p = 0.5")
+g9 <- ggplot(data_frame(x = k, y1 = prob9)) + geom_bar(aes(x = k, y = prob9), stat="identity", fill="cyan") +
+  ylab("p = 0.9")
+grid.arrange(g1,g3,g5,g9, ncol=2, nrow=2, top="Binomial distributions for different p")
+```
+
+
+### Poisson distribution
+
+* used to model counts
+* examples: number of add clicks per time interval, number of laptop crashes, ...
+* with n very large and p very small, is an accurate approximation of the binomial distribution
+* $\lambda$ = mean and variance of the distribution (see later)
+
+$$P(X = x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}$$
+
+```{r, warning=FALSE, message=FALSE}
+# Plot various Poisson distributions
+n <- 10
+k <- seq(0,20,1)
+lambda1 <- 1
+prob1 <- dpois(k,lambda1)
+lambda2 <- 2
+prob2 <- dpois(k,lambda2)
+lambda4 <- 4
+prob4 <- dpois(k,lambda4)
+lambda10 <- 10
+prob10 <- dpois(k,lambda10)
+g1 <- ggplot(data_frame(x = k, y1 = prob1)) + geom_bar(aes(x = k, y = prob1), stat="identity", fill="blue") +
+  ylab("lambda = 1")
+g3 <- ggplot(data_frame(x = k, y1 = prob2)) + geom_bar(aes(x = k, y = prob2), stat="identity", fill="green") +
+  ylab("lambda = 2")
+g5 <- ggplot(data_frame(x = k, y1 = prob4)) + geom_bar(aes(x = k, y = prob4), stat="identity", fill="violet") +
+  ylab("lambda = 4")
+g9 <- ggplot(data_frame(x = k, y1 = prob10)) + geom_bar(aes(x = k, y = prob10), stat="identity", fill="cyan") +
+  ylab("lambda = 10")
+grid.arrange(g1,g3,g5,g9, ncol=2, nrow=2, top="Poisson distributions for different lambda")
+```
+
+Use Poisson to model rates over time:
+
+* $t$ = total elapsed time
+* expected count per unit of time: $\lambda = E[X / t]$ 
+* distribution: $X \sim Poisson(\lambda t)$
+
+Example:
+
+* cars approaching motorway exit <fill in your favorite bottleneck location here>
+* number of cars arriving per minute (on average): 12
+* What is the probability that exactly 0 cars arrive in one minute? 
+
+```{r}
+dpois(0, lambda=12)
+```
+
+* Let's observe for 10 minutes in total
+* What is the probability that fewer than 40 cars arrive during these 10 minutes? 
+
+```{r}
+ppois(80, lambda=12*10)
 ```
 

@@ -1,7 +1,30 @@
 ---  
-  title: Continuous Probability Distributions
+title: Continuous Probability Distributions
 output: 
   html_document
 ---
   
-### Continuous Probability Distributions
+## Continuous Probability Distributions
+
+
+### Uniform Distribution
+
+* valid between a minimum and a maximum value
+* all intervals _of the same length_ between the minimum and the maximum values are equally probable
+* application: often used as a prior distribution when we have no prior knowledge
+* examples for discrete version of uniform distribution: die rolls
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+# Plot various binomial distributions
+n <- 10
+k <- seq(0,10,0.01)
+minval = 3
+maxval = 7
+prob = dunif(k, minval, maxval)
+ggplot(data_frame(x = k, y = prob), aes(x, y)) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
+  ggtitle("Uniform distribution example")
+```
