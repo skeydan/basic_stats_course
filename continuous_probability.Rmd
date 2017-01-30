@@ -28,22 +28,26 @@ n <- 10
 k <- seq(0,10,0.01)
 minval = 3
 maxval = 7
-prob = dunif(k, minval, maxval)
-ggplot(data_frame(x = k, y = prob), aes(x, y)) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
+ggplot(data_frame(k), aes(k, dunif(k, minval, maxval))) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
   ggtitle("Uniform distribution example")
+ggplot(data_frame(k), aes(k, punif(k, minval, maxval))) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
+  ggtitle("Corresponding cumulative distribution")
 ```
 
 
 ### Normal / Gaussian Distribution
 
+#### General
+
 * the famous "bell curve"
 * characterized by mean $\mu$ and variance $\sigma^2$:
 
 $$ P(X = x; \mu, \sigma^2) = (2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}$$
+
 * mean: $\mu$
 * variance: $\sigma^2$
 
-* examples: 
+* examples: TBD
 
 Compare normal distributions with different variances:
 
@@ -54,15 +58,64 @@ p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=
 ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
 ```
 
-Why are so many processes / variables normally distributed?
+... and their corresponding CDFs:
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
+p <- ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
+ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
+```
+
+#### Why are so many processes / variables normally distributed? 
+
+TBD
 
 
-If $\mu = 0, \sigma^2 =1$, we have a _standard normal_ istribution.
+#### The standard normal distribution
+
+If $\mu = 0, \sigma^2 =1$, we have a _standard normal_ distribution.
 
 ```{r}
 x <- seq(-4, 4, 0.1)
-y <- dnorm(x,0,1)
+#y <- dnorm(x,0,1)
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dnorm, args = list(mean = 0, sd =1))
 ```
 
-The standard normal is tremendously important in statistics, as 
+The standard normal is tremendously important in statistics. 
+
+* ~ 68% of the standard normal density lies between $[\bar{x} - 1 sd, \bar{x} + 1 sd]$
+* ~ 95% of the standard normal density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
+* ~ 99% of the standard normal density lies between $[\bar{x} - 3 sd, \bar{x} + 3 sd]$
+
+```{r}
+normal_prob_area_plot <- function(lb, ub, mean = 0, sd = 1, limits = c(mean - 4 * sd, mean + 4 * sd), fcolor = "blue") {
+    x <- seq(limits[1], limits[2], length.out = 100)
+    xmin <- max(lb, limits[1])
+    xmax <- min(ub, limits[2])
+    areax <- seq(xmin, xmax, length.out = 100)
+    area <- data.frame(x = areax, ymin = 0, ymax = dnorm(areax, mean = mean, sd = sd))
+    (ggplot()
+     + geom_line(data.frame(x = x, y = dnorm(x, mean = mean, sd = sd)),
+                 mapping = aes(x = x, y = y))
+     + geom_ribbon(data = area, mapping = aes(x = x, ymin = ymin, ymax = ymax), fill = fcolor)
+     + scale_x_continuous(limits = limits))
+}
+g1 <- normal_prob_area_plot(-3,3)
+g2 <- normal_prob_area_plot(-2,2, fcolor = "white")
+g3 <- normal_prob_area_plot(-1,1, fcolor = "green")
+grid.arrange(g3,g2,g1, ncol=2, nrow=2)
+```
+
+
+#### Converting between standardized and non-standardized normals
+
+* to go from normal to standard normal:
+    + normal: $$X \sim N(\mu,\sigma^2)$$
+    + standard normal: $$Z = \frac{X -\mu}{\sigma} \sim N(0, 1)$$
+
+* to go from standard normal to normal:
+    + standard normal: $$Z \sim N(0, 1)$$
+    + normal: $$X = \mu + \sigma Z \sim N(\mu, \sigma^2)$$
+
+
+

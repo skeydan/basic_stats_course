@@ -6,12 +6,9 @@ output:
 
 &nbsp;
 
+## Introduction to Probability
 
-# Probability
-
-&nbsp;
-
-## Fundamental axioms of probability (Kolmogorov)
+### Fundamental axioms of probability (Kolmogorov)
 
 1. The probability of any event is a positive real number.
 2. The probability that _some_ event will occur is 1.
@@ -19,14 +16,14 @@ output:
 
 &nbsp;
 
-## Probability of event A __OR__ event B happening: \(P(A\cup B)\)
+### Probability of event A __OR__ event B happening: \(P(A\cup B)\)
 
 * Disjoint events (see axiom 3 above): $$P(A\cup B)=P(A)+P(B)$$
 * Non-disjoint events: $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
 
 &nbsp;
 
-## Probability of event A __AND__ event B happening: \(P(A\cap B)\)
+### Probability of event A __AND__ event B happening: \(P(A\cap B)\)
 
 * General formulation:
 $$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A)$$
@@ -35,19 +32,8 @@ $$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A) = P(A) * P(B)$$
 
 &nbsp;
 
-## Independent events
+### Independent events
 
 * Events are _independent_ if
 $$P(A \cap B) = P(A)P(B)$$
 
-
-## Random Variables and Probability Distributions
-
-* A random variable models the numerical outcome of an experiment
-* Random variables come in two flavours:
-    + discrete: can take on only a countable number of possibilities
-    + continuous: can take any value on [a subset of] the real number line 
-* Discrete random variables have probability mass functions
-    + every possible outcome is assigned a probability
-* Continuous random variables have probability density functions
-    + probability at any given _point_ is 0, can only meaningfully specify probabilities for _intervals_

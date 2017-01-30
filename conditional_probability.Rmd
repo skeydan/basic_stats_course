@@ -6,7 +6,10 @@ output:
 
 &nbsp;
 
+
 ## Conditional Probability
+
+### Definition
 
 * Probabilities change when _conditioning_ on additional information.
 * Probability of \(A\) given \(B\):
@@ -20,14 +23,14 @@ $$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
 
 &nbsp;
 
-## Conditioning matters
+### Conditioning matters
 
 * Probability of being struck by lightning vs. probability of being struck by lightning, provided you go out in the woods in a heavy thunderstorm
 * Probability of contracting rare hereditary disease XYZ vs. probability of contracting rare hereditary disease XYZ, given parents have it
 
 &nbsp;
 
-## Bayes Theorem
+### Bayes Theorem
 
 * Prior probability \(P(A)\)
 * Likelihood \(P(B|A)\)

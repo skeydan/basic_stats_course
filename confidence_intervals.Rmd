@@ -1,9 +1,48 @@
 ---
-title: "confidence-intervals"
+title: "Confidence intervals"
 output: html_document
 ---
 
-## What is a confidence interval
+## Confidence Intervals
+
+### From the CLT to confidence intervals
+
+
+According to the CLT, the sample mean, {$$}\bar X{/$$},
+is approximately normal with mean {$$}\mu{/$$} and standard
+deviation {$$}\sigma / \sqrt{n}{/$$}. Furthermore,
+
+{$$}\mu + 2 \sigma /\sqrt{n}{/$$}
+
+ is pretty far out in the tail
+(only 2.5% of a normal being larger than 2 sds in the tail).
+Similarly,
+
+{$$}\mu - 2 \sigma /\sqrt{n}{/$$}
+
+is pretty far in the left tail (only 2.5% chance of a normal being smaller than
+2 standard deviations in the tail). So the probability
+{$$}\bar X{/$$} is bigger than {$$}\mu + 2 \sigma / \sqrt{n}{/$$}
+or smaller than {$$}\mu - 2 \sigma / \sqrt{n}{/$$} is 5%.
+Or equivalently, the probability that these limits contain {$$}\mu{/$$}
+is 95%. The quantity:
+
+{$$}\bar X \pm 2 \sigma /\sqrt{n}{/$$}
+
+is called a 95% interval for {$$}\mu{/$$}.
+The 95% refers to the fact that if one were to repeatedly
+get samples of size {$$}n{/$$}, about 95% of the intervals obtained
+would contain {$$}\mu{/$$}. The 97.5th quantile is 1.96 (so I rounded to 2 above).
+If instead of a 95% interval, you wanted a 90% interval, then
+ you want (100 - 90) / 2 = 5% in each tail. Thus your replace the 2 with
+ the 95th percentile, which is 1.645.
+
+
+
+
+
+
+## CI caveats
 
 * 95 % confidence is a confidence that in the long-run 95 % of the CIs will include the population mean. It is a confidence in the algorithm and not a statement about a single CI.
 * In frequentist terms the CI either contains the population mean or it does not. 

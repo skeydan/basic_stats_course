@@ -8,16 +8,21 @@ output:
     number_sections: true
 ---
 
+# Frequentist and Bayesian Statistics
+
 ```{r child = 'freq_bayes.Rmd'}
 ```
 
-  
+# Probability
+
 ```{r child = 'probability.Rmd'}
 ```
 
 ```{r child = 'conditional_probability.Rmd'}
 ```
 
+```{r child = 'probability_distributions.Rmd'}
+```
 
 ```{r child = 'expected_values.Rmd'}
 ```
@@ -30,20 +35,17 @@ output:
 ```
 
 
-```{r child = 'cumulative_distribution_functions.Rmd'}
+```{r child = 'clt.Rmd'}
 ```
 
+# Statistical inference
 
 
-```{r child = 'clt.Rmd'}
+```{r child = 'confidence_intervals.Rmd'}
 ```
 
 
 ```{r child = 'hypothesis_testing.Rmd'}
-```
-
-
-```{r child = 'confidence_intervals.Rmd'}
 ```
 
 
@@ -58,8 +60,12 @@ output:
 ```{r child = 'multiple_comparisons.Rmd'}
 ```
 
+# Bayesian statistics
+
 ```{r child = 'bayesian.Rmd'}
 ```
+
+# A quick primer on linear regression
 
 ```{r child = 'lreg.Rmd'}
 ```

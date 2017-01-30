@@ -4,12 +4,5 @@ output:
   html_document
 ---
   
-  
-## Cumulative Probability Distributions and Quantile Functions
-  
-  bla
 
-### Cumulative Probability Distributions
-
-### Quantile Functions
 

@@ -1,0 +1,104 @@
+---
+title: "probability_distributions"
+output: html_document
+---
+
+## Probability distributions
+
+### Random Variables 
+
+* A random variable models the numerical outcome of an experiment
+* Random variables come in two flavours:
+    + discrete: can take on only a countable number of possibilities
+    + continuous: can take any value on [a subset of] the real number line 
+* Examples:
+    + Die rolls are discrete random variables, where every outcome between 1 and 6 is equally likely ($P(X = x) = \frac{1}{6}$)
+    + Test results are mostly regarded as continuous random variables, with an average value and a spread
+ 
+    
+### Probability mass/density function (PMF/PDF)    
+* Discrete random variables have probability mass functions
+    + every possible outcome is assigned a probability
+* Continuous random variables have probability density functions
+    + probability at any given _point_ is 0, can only meaningfully specify probabilities for _intervals_
+ 
+  
+### Cumulative distribution function (CDF)  
+
+* The cumulative distribution function (CDF) designates the probability that the random variable is less than or equal to some value x:
+$$F(x)=P(X \leq x)$$
+
+* Examples:
+    + Die rolls: $P(X \leq 3) = 0.5$
+    + For a standardized IQ test, $P(X \leq 100) = 0.5$
+
+### Quantiles
+
+* Related to cumulative distribution functions are _quantiles_ (or _percentiles_, when multiplied by 100).
+* The  $\alpha^{th}$ quantile of a distribution with distribution function $F$ is the point $x_\alpha$ so that
+
+$$F(x_\alpha) = \alpha$$
+
+* Examples:
+    + the 0.95 quantile of a distribution is the point so that 95% of the density lies below it.
+    + the 0.5 quantile is the _median_, the point such that 50% of the density lies below it
+    + so, the median of the "roll dice distribution" is 3.5
+* Important quantiles
+    + 0.025, 0.05: often used in hypothesis testing
+    + .25: first quartile, 25%
+    + .5 median, 50%
+    + .75 third quartile, 75%
+    + 0.975, 0.95: often used in hypothesis testing
+
+
+### Handling probability distributions in R
+
+For every probability distribution, there are 4 functions in R:
+
+* r<...>: generates a random value from the distribution
+* d<...>: gives the density/mass for a value
+* p<...>: gives the cumulative probability for a quantile
+* q<...>: gives the corresponding value for a cumulative probability (quantile function)
+
+Examples: 
+
+#### Generate random variables:
+```{r}
+# generate one random value from a uniform distribution between 0 and 1
+runif(1)
+# generate 10 random values from a uniform distribution between 0 and 1
+runif(10)
+# generate 10 random values from a uniform distribution between -10 and 10
+runif(10, min = -10, max = 10)
+```
+
+#### Get density:
+```{r}
+# probability density of a random value, drawn from a uniform distribution between 0 and 1
+dunif(0.1)
+# probability densities of 10 random values, drawn from a uniform distribution between 0 and 1
+dunif(seq(0,0.99,.1))
+# probability densities of 10 random values, drawn from a uniform distribution between -10 and 10
+dunif(seq(0,0.99,.1),min = -10, max = 10)
+```
+
+#### Get cumulative probability:
+```{r}
+# cumulative probability of a random value, drawn from a uniform distribution between 0 and 1
+punif(0.3)
+# cumulative probability of 10 random values, drawn from a uniform distribution between 0 and 1
+punif(seq(0,0.99,.1))
+# cumulative probability of 10 random values, drawn from a uniform distribution between -10 and 10
+punif(seq(0,0.99,.1), min = -10, max = 10)
+```
+
+#### Get value corresponding to cumulative probability:
+```{r}
+# value corresponding to a cumulative probability, drawn from a uniform distribution between 0 and 1
+qunif(0.3)
+# values corresponding to cumulative probabilities, drawn from a uniform distribution between 0 and 1
+qunif(seq(0,0.99,.1))
+# cumulativeprobability of 10 random values, drawn from a uniform distribution between -10 and 10
+qunif(seq(0,0.99,.1), min = -10, max = 10)
+```
+

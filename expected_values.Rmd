@@ -18,7 +18,7 @@ Concretely, we estimate _expected values_ of a population from _sample statistic
 
 ### Mean / expected value of a distribution
 
-The expected mean $E[X] = \sum_x x*p(x)$ of a discrete probability distribution is estimated from the sample mean $\bar X = \sum_{i=1}^n x_i  * p(x_i)$.
+The expected mean $$E[X] = \sum_x x*p(x)$$ of a discrete probability distribution is estimated from the sample mean $$\bar X = \sum_{i=1}^n x_i  * p(x_i)$$.
 
 The sample mean is the center of mass of the observed values.
 

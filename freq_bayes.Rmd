@@ -8,7 +8,6 @@ output:
 
 &nbsp; 
 
-# Frequentist and Bayesian Statistics
 
 ## Frequentist vs. Bayesian in a Nutshell 
 

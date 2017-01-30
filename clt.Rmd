@@ -1,9 +1,126 @@
 ---  
-  title: Central Limit Theorem
+title: Central Limit Theorem
 output: 
   html_document
 ---
-  
-## Central Limit Theorem
-  
-  
+
+## The Central Limit Theorem
+
+We now approach the process of inferring population characteristics from sample characteristics.
+
+### The Law of Large Numbers
+
+* In the limit of collecting an infinite amount of data, the sample mean of IID (independent and identically distributed) data is a perfect estimate of the population mean
+* the same is true for the sample variance and sample standard deviation
+* estimators for which that holds are called _consistent_ estimators
+* Example: Estimating the mean of roll dice
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(gridExtra)
+ns = c(10, 50, 1000, 10000)
+means <- sapply(ns, function(n) {cumsum(sample(1:6, n, replace = TRUE))/(1:n)})
+plots <- Map(function(n,m) {
+  ggplot(data.frame(x = 1:n, y = m), aes(x = x, y = y)) + geom_line() + labs(x = "Number of observations", y = "Cumulative mean") + scale_y_continuous(limits = c(1,6))}, ns, means) 
+do.call('grid.arrange', plots)
+```  
+
+
+
+### The Central Limit Theorem 
+
+* As sample size increases, the distribution of __averages__ of IID variables approaches the standard normal 
+* That is: $$\bar X_n \sim N(\mu, \sigma^2 / n)$$
+* Or: $$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$$
+* where the standard deviation divided by the square root of the sample size $$\sigma / \sqrt{n}$$ is the _standard error of the mean_.
+
+
+### The CLT in action
+
+As an example for the CLT, we will sample 40 values from an exponential(0.2) distribution and do this a 1000 times.
+
+```{r}
+lambda <- 0.2
+nsim <- 1000
+n <- 40
+```
+
+We store the raw values ...
+
+```{r}
+c <- rexp(nsim * n, lambda)
+m <- matrix(c, nsim, n)
+```
+
+... the means of each 40-element sample ...
+
+```{r}
+means <- apply(m, 1, mean)
+head(means)
+```
+
+... as well as the mean of the sample means:
+
+```{r}
+sample_mean_of_means <- mean(means)
+sample_mean_of_means
+```
+
+
+Now we can compare the means - and the mean of means - with the theoretical mean of the exponential(0.2) distribution, which is equal to the 1 over the parameter lambda:
+
+```{r}
+dist_mean <- 1/lambda
+dist_mean
+```
+
+Now let's look at a histogram of the 1000 means we obtained.
+Also displayed is the theoretical mean (red line) and the mean of means (black line).
+
+```{r, warning=FALSE,message=FALSE}
+library(dplyr)
+ggplot(data_frame(m = means), aes(means)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') + 
+  geom_vline(xintercept = dist_mean, color = 'red', size = 1) +  
+  geom_vline(xintercept = sample_mean_of_means, color = 'black', size = 1) +
+  ggtitle('Distribution of sample means from an exponential distribution, n=40')
+```
+
+As you see the theoretical mean and the mean of means are _very_ close.
+Let's check the numbers:
+
+```{r}
+paste0('Mean of exponential distribution is: ', dist_mean, '. Mean of sample means is: ', sample_mean_of_means)
+```
+
+
+Now let's compare the distribution of sample means to the distribution of the raw exponential data.
+First, here is a histogram of the means again:
+
+```{r}
+ggplot(data_frame(m = means), aes(means)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') +
+  ggtitle('Distribution of sample means from an exponential distribution, n=40')
+```
+
+Here, on the other hand, is a histogram of the raw data, with the empirical mean shown in black:
+
+```{r}
+whole_sample_mean <- mean(c)
+ggplot(data_frame(c = c), aes(c)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') + 
+  geom_vline(xintercept = whole_sample_mean, color = 'black', size = 1) +
+  ggtitle('Distribution of exponentials, n=1000')
+```
+
+So we see that in contrast to the distribution of means, the exponential distribution of raw data is heavily skewed.
+
+We can also create quantile-quantile plots to check whether the means, and the raw data, respectively, are normally distributed. First, the means:
+
+```{r}
+qqnorm(means)
+```
+
+We see that theoretical quantiles and sample quantiles match very well. This is not at all the case for the raw data:
+
+```{r}
+qqnorm(c)
+```
+
