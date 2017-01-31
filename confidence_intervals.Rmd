@@ -7,81 +7,77 @@ output: html_document
 
 ### From the CLT to confidence intervals
 
+* As we saw, the sample mean of IID variables approaches a standard normal distribution:
+$$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$$
+* And we know that for a standard normal distribution,  ~ 95% of the density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
+* So the probability that $\bar X$ lies between $\mu + 2 \sigma / \sqrt{n}$ and $\mu - 2 \sigma / \sqrt{n}$ is ~ 95%.
+* Therefore, 
+$\bar X \pm 2 \sigma /\sqrt{n}$
+is an approx. 95% interval for $\mu$.
+* In the same way, 
+$\bar X \pm 3 \sigma /\sqrt{n}$
+is an approx. 99% interval for $\mu$ a.
 
-According to the CLT, the sample mean, {$$}\bar X{/$$},
-is approximately normal with mean {$$}\mu{/$$} and standard
-deviation {$$}\sigma / \sqrt{n}{/$$}. Furthermore,
+### Confidence intervals: the mechanics
 
-{$$}\mu + 2 \sigma /\sqrt{n}{/$$}
-
- is pretty far out in the tail
-(only 2.5% of a normal being larger than 2 sds in the tail).
-Similarly,
-
-{$$}\mu - 2 \sigma /\sqrt{n}{/$$}
-
-is pretty far in the left tail (only 2.5% chance of a normal being smaller than
-2 standard deviations in the tail). So the probability
-{$$}\bar X{/$$} is bigger than {$$}\mu + 2 \sigma / \sqrt{n}{/$$}
-or smaller than {$$}\mu - 2 \sigma / \sqrt{n}{/$$} is 5%.
-Or equivalently, the probability that these limits contain {$$}\mu{/$$}
-is 95%. The quantity:
-
-{$$}\bar X \pm 2 \sigma /\sqrt{n}{/$$}
-
-is called a 95% interval for {$$}\mu{/$$}.
-The 95% refers to the fact that if one were to repeatedly
-get samples of size {$$}n{/$$}, about 95% of the intervals obtained
-would contain {$$}\mu{/$$}. The 97.5th quantile is 1.96 (so I rounded to 2 above).
-If instead of a 95% interval, you wanted a 90% interval, then
- you want (100 - 90) / 2 = 5% in each tail. Thus your replace the 2 with
- the 95th percentile, which is 1.645.
+* Say we want a 90% confidence interval for the mean of some distribution
+* then the upper 5% and the lower 5% of the distribution are not contained in the CI
+* the upper 5% is everything _above the .95 quantile_, which is $1.645$ for a standard normal
+* the lower 5% is everything _below the 0.05 quantile_, which is $-1.645$ for a standard normal
+* therefore 90% of the density lies between $-1.645$ and $1.645$, in standard normal units
+* converting back to the original units, we have that 90% of the density lies between
+$\bar X \pm 1.645 \sigma /\sqrt{n}$
 
 
+### What a confidence interval is NOT
 
+* Constructing a 95% confidence interval around an average does __not__ mean that the true mean is contained in the interval with 95% probability!
+* This kind of statement is only possible with __credible intervals__ in Bayesian methodology
+* In frequentist statistics, all assertions have to be seen as assertions __in the long run__:
+* 95 % confidence is a confidence that __in the long run__, 95 % of the CIs will include the population mean. It is a confidence in the algorithm and not a statement about a single CI.
+* In other words: Confidence intervals are a statement about the percentage of confidence intervals that contain the true parameter value.
+* Even this statement is only true __if the mean observed in the sample happened to be the true mean__! In general, in the long run, a 95% CI has an 83.4% probability of capturing the true mean (Cumming & Maillardet, 2006).
 
-
-
-## CI caveats
-
-* 95 % confidence is a confidence that in the long-run 95 % of the CIs will include the population mean. It is a confidence in the algorithm and not a statement about a single CI.
-* In frequentist terms the CI either contains the population mean or it does not. 
-* Relationship to p-values: if an effect is statistically different ( p < 0.05) from 0 in a
-two-sided t -test with an alpha of .05, the 95% CI for the mean difference between two
-groups will not include zero.
-* Visualization: http://rpsychologist.com/d3/CI/
-
-## Calculation of CI
-* CI for a mean, using the t distribution:
-##tbd
-
-
-## Prediction intervals
+### Confidence intervals vs. prediction intervals
 * Even though 95% of future confidence intervals will contain the true parameter, a 95%
-confidence interval will not contain 95% of future individual observations.
-* It is always much wider than a confidence interval. The reason is
-7that individual observations can vary substantially, but means of future samples (which
-fall within a normal confidence interval 95% of the time) will vary much less
+confidence interval will not contain 95% of future individual observations
+* For prediction of individual observations, we need __prediction intervals__
+* These are always much wider than confidence intervals
+* The reason is that future individual observations vary much more than future means
 
-## Calculation of CI
-* CI for a mean, using the t distribution:
-##tbd
-Standard Error (SE) = σ*√(1+1/N)
 
-## One thing people find difficult to understand is why a 95% confidence interval does not
-provide us with the interval where 95% of future means will fall. The % of means that falls
-within a single confidence interval is called the capture percentage. A 95% confidence
-interval is only a 95% capture percentage when the statistic (such as an effect size) you
-observe in a single sample happens to be exactly the same as the true parameter. This
-situation is illustrated in the picture below. The observed effect size (dot) falls exactly on
-the true effect size (vertical dotted line). In this case, and only in this case , 95% of future
-means will fall within this 95% confidence interval.
-So, the percentage of future means that fall within a single
-confidence interval depends upon which single confidence interval you happened to
-observe! In the long run, a 95% CI has an 83.4% capture probability (Cumming &
-Maillardet, 2006).
-The simulation
-returns the number of CI that contains the mean (which should be 95% in the long run).
-The simulation also returns the % of means from future studies that fall within the 95%
-of the original study, or the capture percentage. It differs from (and is often lower, but
-sometimes higher, than) the confidence interval.
+### Exploring the confidence interval: http://rpsychologist.com/d3/CI/
+
+
+### Calculation of CIs
+
+#### Confidence interval for a normal distribution:
+
+```{r}
+x <- rnorm(1000, mean = 100, sd = 10)
+# a 95% confidence interval; qnorm(0.975) = 1.96
+mean(x) + c(-1, 1) * qnorm(0.975) * sd(x)/sqrt(length(x))
+# a 90% confidence interval; qnorm(0.95) = 1.64
+mean(x) + c(-1, 1) * qnorm(0.95) * sd(x)/sqrt(length(x))
+```
+
+
+#### Confidence interval for a proportion:
+
+* Let's imagine we've asked 100 people if they prefer apples or oranges, and 61 said they preferred oranges, yielding a preference ratio of .61. What is a 95% confidence interval for the "true proportion"?
+* Preference is binary, so the sum of preferences is a binomial distribution with true mean $p$ and true variance $p(1-p)$
+* theoretical CI:
+$$\hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{p(1 - p)}{n}}$$
+* Wald CI (replacing $p$, the true parameter we don't know, by $\hat p$, the parameter estimated from the sample):
+$$\hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{\hat p(1 - \hat p)}{n}}$$
+
+
+```{r}
+p_hat <- 0.61
+n <- 100
+# a 95% confidence interval
+p_hat + c(-1, 1) * qnorm(0.975) * sqrt((p_hat * (1-p_hat))/n)
+# alternatively, use binom.test for an exact test
+binom.test(61,100)$conf.int
+```
+

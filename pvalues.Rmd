@@ -1,10 +1,20 @@
 ---
-title: "pvalues"
+title: "Hypothesis testing and p-values"
 output: html_document
 ---
 
-## p-value
+## Hypothesis testing and p-values
 
-The p-value is the probability under the null hypothesis of obtaining evidence as or more extreme than the test statistic obtained from the observed data, in the direction of the alternative hypothesis.
+* The _p-value_ is the probability under the null hypothesis of obtaining evidence as or more extreme than the test statistic obtained from the observed data, in the direction of the alternative hypothesis.
+* Example:
+
+```{r}
+
+```
 
 
+
+
+* Relationship to p-values: if an effect is statistically different ( p < 0.05) from 0 in a
+two-sided t -test with an alpha of .05, the 95% CI for the mean difference between two
+groups will not include zero.

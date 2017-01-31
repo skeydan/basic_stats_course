@@ -49,9 +49,16 @@ output:
 ```
 
 
+```{r child = 't.Rmd'}
+```
+
+
 ```{r child = 'pvalues.Rmd'}
 ```
 
+
+```{r child = 'power.Rmd'}
+```
 
 ```{r child = 'effect_size.Rmd'}
 ```
