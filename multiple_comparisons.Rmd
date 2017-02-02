@@ -1,18 +1,19 @@
 ---
-title: "multiple_comparisons"
+title: "Multiple comparisons"
 output: html_document
 ---
 
-## Bonferroni 
+## Multiple comparisons
 
-* control the family-wise error rate (FWER) at level alpha
-* dividing alpha by the total number of tests performed
-* may be too conservative
-
-## Benjamini-Hochberg
-
-* control the false discovery rate at level alpha
-* calculate the p-values as usual
-* order them from smallest to largest, $p_1, p_2,...p_m$.
-* any result with $p_i <= \frac{(alpha*i)}{m}$ is declared significant
+* If you perform multiple hypothesis tests, the chance of a type 1 error increases
+* Say you perform 20 tests, with alpha = .05: then the chance of _not_ committing a type 1 error is $.95^2 = 0.35$!
+* There are several methods of controlling the overall error rate, e.g.
+    + Bonferroni correction
+        + controls the family-wise error rate (FWER) at level alpha
+        + dividing alpha by the total number of tests performed
+        + may be too conservative
+    + Benjamini-Hochberg
+        + controls the false discovery rate at level alpha
+        + calculates the p-values as usual, then orders them from smallest to largest, $p_1, p_2,...p_m$.
+        + now, any result with $p_i <= \frac{(alpha*i)}{m}$ is declared significant
 

@@ -35,7 +35,7 @@ $$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
 * Prior probability \(P(A)\)
 * Likelihood \(P(B|A)\)
 * Evidence \(P(B)\)
-* Posterior probability \(P(A)\)
+* Posterior probability \(P(A|B)\)
 
 $$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
 

@@ -1,20 +1,37 @@
 ---
-title: "Hypothesis testing and p-values"
+title: "Hypothesis testing, p-values, and confidence intervals"
 output: html_document
 ---
 
-## Hypothesis testing and p-values
+## Hypothesis testing, p-values, and confidence intervals
 
-* The _p-value_ is the probability under the null hypothesis of obtaining evidence as or more extreme than the test statistic obtained from the observed data, in the direction of the alternative hypothesis.
-* Example:
+### The meaning of p
+
+* Hypothesis testing, p-values, and confidence intervals are all related.
+* Looking at the output of a $t$ test ...
+
+```{r}
+set.seed(1024)
+population_mean <- 1000
+simulation_mean <- 1002
+sd <- 2
+n <- 9
+data <- rnorm(n, mean = simulation_mean, sd = sd)
+t.test(data, alternative = 'two.sided', mu = population_mean, conf.level = 0.95)
+```
+
+* we have that:
+    + under $H_0$, when $\mu$ = 1000, the sample mean obtained corresponds to a $t$ value of $t$ = 1.4002
+    + the respective _p-value_ is the probability, under $H_0$, of obtaining a $t$ value as extreme or more extreme than that
+* As we did a two-sided test, this means that the probability of obtaining a $t \ge$ 1.4002 or a $t \le$ -1.4002 is 0.199, under the assumption the true mean is 1000
+* As this p-value is greater than 0.05, we cannot reject $H_0$
 
 ```{r}
 
 ```
 
+### P-values: relationship to confidence intervals
 
+* If an effect is statistically different from the value assumed under $H_0$ in a two-sided $t$-test with an alpha of .05 (p = .05), the 95% confidence interval will not include that value.
+* In our example, we have that the 95% confidence interval ranges from 999.18 to 1003.34 and thus, includes 1000.
 
-
-* Relationship to p-values: if an effect is statistically different ( p < 0.05) from 0 in a
-two-sided t -test with an alpha of .05, the 95% CI for the mean difference between two
-groups will not include zero.

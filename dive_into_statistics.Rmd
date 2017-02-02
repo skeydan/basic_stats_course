@@ -55,14 +55,13 @@ output:
 
 ```{r child = 'pvalues.Rmd'}
 ```
-
+ 
 
 ```{r child = 'power.Rmd'}
 ```
 
 ```{r child = 'effect_size.Rmd'}
 ```
-
 
 ```{r child = 'multiple_comparisons.Rmd'}
 ```

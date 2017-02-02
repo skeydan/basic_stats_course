@@ -1,20 +1,39 @@
 ---
-title: "effect_size"
+title: "Effect size"
 output: html_document
 ---
 
 ## Effect size
 
-* How strong is an effect?
-* g-family and r-family of measures
-* Typical measures: Cohen's _d_, r (correlation coefficient)
+* Two of the factors influencing power, the true difference of means and the standard deviation, combine to form the _effect size_, which is the standardized true difference:
 
-## Cohen's _d_
-* difference of means, in units of standard deviation
-$$d = \frac{m_1 - m_2}{SD_{pooled}}$$ (see http://rpsychologist.com/d3/cohend/)
-* Relationship to t statistic:
+\[effect size = \frac{\mu_1 - \mu_0}{\sigma}\]
+
+* So, the bigger the effect size, the more likely we are to detect the difference, _given that there is one_
+
+
+### Measures of effect size
+
+* There are two families of measures:
+    + g-family: e.g., Cohen's $d$
+    + r-family: e.g., r (the correlation coefficient)
+
+### Cohen's _d_
+
+* Cohen's $d$ is the difference of means, in units of standard deviation:
+$$d = \frac{m_1 - m_2}{SD_{pooled}}$$ 
+* if not reported, Cohen's d may be calculated from the $t$ statistic:
 
 $$t = \frac{m_1 - m_2}{SD_{pooled} * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
 $$d = t * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
-## r and $R^2$
-* how much of variation in dependent variable is explained by independent variable ($R^2$)
+
+### $r$ and $R^2$
+
+* $r$ is the correlation coefficient, the (sample) covariance divided by the product of the (sample) standard deviations:
+$$r = \frac{\sum_i{(x_i - \bar x)(y_i - \bar y)}}{s_x s_y}$$
+
+* $R^2$, the coefficient of determination, indicates how much of variation in the dependent variable is explained by the  independent variable:
+$$R^2 = 1 - \frac{SS_{res}}{SS_{total}}$$
+
+
+### Demo: http://rpsychologist.com/d3/cohend/

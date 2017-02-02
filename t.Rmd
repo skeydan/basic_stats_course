@@ -1,0 +1,63 @@
+---
+title: "Hypothesis testing: the t distribution"
+output: html_document
+---
+
+## Hypothesis testing: the t distribution
+
+* With small sample sizes, for normally distributed data, instead of the normal distribution, the $t$ distribution is used to construct confidence intervals and perform hypothesis testing.
+* Instead of by a mean and a standard deviation, the $t$ distribution is parameterized by the _degrees of freedom_.
+* Compared with a normal, the $t$ distribution has thicker tails than the normal. 
+* The more degrees of freedom, the more like a normal the $t$ distribution gets.
+* Compare the $t$ distribution with the standard normal:
+    + standard normal: $\frac{\bar X - \mu}{\sigma/\sqrt{n}}$
+    + $t$, with $n-1$ degrees of freedom: $\frac{\bar X - \mu}{S/\sqrt{n}}$ (uses sample standard deviation instead of the standard deviation of the population)
+    
+    
+### Comparing the normal and the $t$ distribution
+
+```{r, warning=FALSE, message=FALSE}
+library(ggfortify)
+library(ggplot2)
+
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'red', mean=0, sd=1)
+p <- ggdistribution(dt, seq(-4, 4, 0.1), colour = 'green', p = p, df = 1)
+p <- ggdistribution(dt, seq(-4, 4, 0.1), colour = 'blue', p = p, df = 10)
+ggdistribution(dt, seq(-4, 4, 0.1), colour = 'cyan', p = p, df = 20)
+```
+
+    
+### The $t$ confidence interval
+
+* The $t$ confidence interval is constructed analogously to that of the normal distribution ($\bar X \pm Z_{1-\alpha/2}   \sigma/\sqrt{n}$), namely
+
+$$\bar X \pm t_{n-1} S/\sqrt{n}$$
+* where  $t_{n-1}$ is the relevant quantile from the *t* distribution with $n-1$ degrees of freedom.
+
+Calculate a $t$ confidence interval with R:
+
+```{r}
+m <- 1000
+sd <- 25
+n <- 9
+(confint <- m +c(-1,1) * sd/sqrt(n) * qt(0.975,n-1))
+```
+
+### $t$ test
+
+* The $t$ test is commonly used to compare normally distributed data from two groups, or to compare a sample mean against a hypothetical mean
+* Let's generate some sample data and compare the obtained mean against a hypothesized theoretical mean.
+* We perform a two-sided test because our hypotheses are:
+    + $H_0$: the mean in this sample is equal to the population mean, $\mu = 1000$
+    # $H_1$: the mean in this sample is different from the population mean
+* We choose an alpha of 0.05, or equivalently, a confidence level of 0.95
+
+```{r}
+population_mean <- 1000
+simulation_mean <- 1002
+sd <- 2
+n <- 9
+data <- rnorm(n, mean = population_mean, sd = sd)
+data
+t.test(data, alternative = 'two.sided', mu = simulation_mean, conf.level = 0.95)
+```

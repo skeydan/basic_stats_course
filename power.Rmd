@@ -6,35 +6,39 @@ output:
 
 ## Power
 
-* probability of rejecting the null hypothesis when it is false
-* = 1 - Type 2 Error ($1 - \beta$)
+### What is power?
+
+* Power is the probability of rejecting the null hypothesis when it is false
+* Power = 1 - Type 2 Error = $1 - \beta$
 
 
 \[power = P\left(\frac{\bar X - \mu_0}{s /\sqrt{n}} > t_{1-\alpha,n-1} ~;~ \mu = \mu_a \right)\]
 
 
-## Power increases with
+Power increases with
 
-* difference between $\mu_0$ and $\mu_a$
-* alpha level
-* sample size 
-
-Of these, can only influence sample size
-
-## Power decreases with
-
-* standard deviation
-
-## Power and effect size
-
-* with fixed alpha, power only depends on the effect size
-
-\[\frac{\mu_a - \mu_0}{\sigma}\]
+* difference between $\mu_0$ and $\mu_a$ (in the case of comparing two groups)
+* the chosen alpha level
+* the sample size 
 
 
+Power decreases with
+
+* the standard deviation
 
 
+### Power calculation
 
+* In R, the _power.t.test_ function calculates the power of a test, given the (assumed) true difference in means, the number of observations per group, the standard deviation, and the type 1 error rate (alpha):
+
+```{r}
+power.t.test(n = 11, delta = 1.2, sd = 0.75, sig.level = 0.05)
+```
+
+* This means that if the true difference in means were 1.2, and the standard deviation happens to be 0.75, and we have 11 people in both groups, and we test at an alpha level of .05, we have a 95% probability of getting a significant result for that effect.
+
+
+### Demo: Inspecting the effect of varying $\mu_1$, $sd$, $N$, and $alpha$
 
 
 

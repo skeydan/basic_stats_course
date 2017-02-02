@@ -15,12 +15,9 @@ output:
 
 &nbsp; 
 
-<figure>
-  <img src="xkcd.png" width='70%'>
-  <figcaption>http://xkcd.com/1132/</figcaption>
-</figure>
-
-&nbsp;
+```{r, echo = FALSE, out.width = "350px"}
+knitr::include_graphics("xkcd.png")
+```
 
 ## Frequentist inference  
 
@@ -35,21 +32,11 @@ output:
     + hypothesis testing
 * until recently, _the_ way to do statistical inference
 
-
-```{r, echo=FALSE}
-#```{r, echo=FALSE, fig.width=4, fig.height=4}
-library(png)
-library(jpeg)
-library(grid)
-library(gridExtra)
-img1 <-  rasterGrob(as.raster(readPNG("xkcd2.png")), interpolate = FALSE)
-img2 <-  rasterGrob(as.raster(readJPEG("t.jpg")), interpolate = FALSE)
-img3 <-  rasterGrob(as.raster(readJPEG("fisher.jpg")), interpolate = FALSE)
-grid.arrange(img2,
-             img3,
-             img1,
-             ncol = 3)
-```
+<table>
+<tr>
+<td><img src='xkcd2.png' width='200px' /></td><td><img src='t.jpg' width='200px'/></td><td><img src='fisher.jpg' width='200px'/></td>
+</tr>
+</table>
 
 Sources:  
 http://xkcd.com/1478  
@@ -58,23 +45,21 @@ https://larspsyll.files.wordpress.com/2015/08/fisher-smoking.jpg
 
 &nbsp;
 
+
 ## Bayesian inference  
 
 &nbsp; 
 
-* probability = plausibility / credibility
+* probability is the quantification of _uncertainty_ 
+* combines prior knowledge with evidence from the data
 * can make assertions about individual events/entities
-* concepts more conforming to human thinking
-* became much more popular recently because of hardware evolution that made it possible to run large simulations
-```{r, echo=FALSE}
-img1 <-  rasterGrob(as.raster(readJPEG("bt.jpg")), interpolate = FALSE)
-img3 <-  rasterGrob(as.raster(readJPEG("bayes.jpg")), interpolate = FALSE)
-img2 <-  rasterGrob(as.raster(readJPEG("laplace.jpg")), interpolate = FALSE)
-grid.arrange(img1,
-             img2,
-             img3,
-             ncol = 3)
-```
+* became much more popular recently because of hardware improvements
+
+<table>
+<tr>
+<td><img src='bt.jpg' width='200px' /></td><td><img src='bayes.jpg' width='200px'/></td><td><img src='laplace.jpg' width='200px'/></td>
+</tr>
+</table>
 
 Sources:  
 https://en.wikipedia.org/wiki/Bayes_theorem  
