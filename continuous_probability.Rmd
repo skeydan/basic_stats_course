@@ -66,10 +66,27 @@ p <- ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=
 ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
 ```
 
-#### Why are so many processes / variables normally distributed? 
+#### Why is the Gaussian so important? 
 
-TBD
+* many processes in nature follow a Gaussian distribution, because they _add up many many small fluctuations_
+* for a given mean and variance, the Gaussian is the maximum entropy (least informative) distribution, the one that can come about in the largest number of ways
 
+Adding up small fluctuations: example
+
+* Say you're standing on a road, together with 10 other people, and repeatedly flip a coin. If it turns up heads, you turn left, if it turns up tails, you turn right. (The other people do the same, flipping coins and turning either left or right.) Say all of you flip the coin 10 times. How will the group of you be distributed on the road?
+* Now say you are not 11 people, but 111. How will the distribution look now?
+* Finally, how about if there were 1111 people of you doing this?
+
+```{r}
+xs <- lapply(c(11,111,1111), function(x) {replicate(x, sum(sample(c(-1,1), 10, replace = TRUE)))})
+plots <- lapply(xs, function(x) {ggplot(data_frame(x = x), aes(x)) + geom_histogram(binwidth = 1)})
+do.call('grid.arrange', list('grobs' = plots, 'ncol' = 3))
+```
+
+
+The larger the number of small fluctuations included, the more normal the distribution becomes.
+
+&nbsp;
 
 #### The standard normal distribution
 

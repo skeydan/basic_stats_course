@@ -67,6 +67,26 @@ x <- seq(0,1,0.001)
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(2,3))
 ```
 
+Let's throw some more, and look at how our belief develops:
+
+
+```{r}
+library(gridExtra)
+x <- seq(0,1,0.001)
+# the results obtained (first item is from the prior)
+throws <- c(1,0,0,1,1,1,1,0,1,0,1,1,0,1,0,1)
+successes <- cumsum(throws)
+# number of throws first item is from the prior)
+ns <- seq(1:16)
+plots <- Map(function(s,n) {
+  ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(s,n))},
+  successes,
+  ns)
+do.call('grid.arrange', plots)
+```
+
+As we see, our belief gets more dense in the middle part of the distribution, but we're still pretty unsure about the true bias.
+
 
 
 ### Computation and Markov Chain Monte Carlo
@@ -76,18 +96,76 @@ ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(2,3))
     + on the other hand, a model should be chosen for adequacy, not for computational feasibility
     + solution: Markov Chain Monte Carlo
     
+* Markov Chain Monte Carlo    
+    
 
 
 
-### Uncertainty, again
+### Communicating uncertainty
 
-* sampling from the posterior can also be used to show the uncertainty inherent in the inference!
+* Having obtained a posterior distribution for the unknown parameter, we now want to predict new data
+* We do this by generating data from the posterior distribution we obtained
+* this is radically different from using just the most probable posterior value for prediction!
+* instead, we average over the predictions from the different parameter values, weighting every prediction by the probability of that parameter value
+* this is called the _posterior predictive_ distribution
+* this way, the uncertainty about the parameter is preserved and communicated in the prediction
 
-HPDI
+Let's go through this. Assume that we've computed a posterior distribution over a grid of values...
 
-### Bayesian model selection
+```{r}
+# compute the posterior on a grid of values ranging from 0 to 1
+p_grid <- seq(0,1, length.out = 1000)
+# uniform prior
+prior <- rep(1,1000)
+# assume our data is 5 successes out of 13 
+# how likely is it to get 5 successes out of 13 with each of the probabilities in the grid?
+likelihood <- dbinom(5,13, prob=p_grid)
+posterior <- prior * likelihood
+# normalized
+posterior <- posterior / sum(posterior)
+```
+
+... we can now sample from the posterior. Each value of the grid is included with a probability that is its posterior:
+
+```{r}
+samples <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+```
+
+This is how the samples look like:
+
+```{r}
+ggplot(data_frame(x = samples), aes(x)) + geom_density()
+```
+
+Now let's compare two kinds of predictions:
+
+* simulating observations exclusively from the MAP (maximum aposteriori, the most probable value of the posterior distribution)
+* simulating observations from the entire posterior distribution
+
+
+```{r}
+map <- p_grid[which.max(posterior)]
+pred1 <- rbinom(1e4, size = 13, prob = map)
+pred2 <- rbinom(1e4, size = 13, prob = samples)
+ggplot(data_frame(pred1 = pred1, pred2 = pred2), aes(x = pred1)) + 
+  geom_histogram(bins = 13, fill = 'red', color = 'red', alpha = .2) + 
+  geom_histogram(aes(x = pred2), bins = 13, fill = 'yellow', alpha = .2, color = 'yellow') +
+  xlab("predicted values")
+```
+
+As we see, the predictions from the entire distribution are more spread out, thus better conveying the uncertainty.
+
 
 
 ### Bayes in machine learning
+
+
+### Read on
+
+As we don't have the time to cover more of Bayesian statistics, here are my recommendations:
+
+* Statistical Rethinking, by Richard McElreath. Great for understanding the concepts, what really matters, and why it matters
+* Doing Bayesian Data Analysis, by John Krusche. 
+* , by Andew Gelman. Advanced stuff.
 
 

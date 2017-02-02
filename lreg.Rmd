@@ -1,9 +1,71 @@
 ---  
-  title: Linear Regression
+title: Linear Regression
 output: 
   html_document
 ---
   
-# Linear Regression
+## Linear Regression
   
-  
+### Why linear regression?
+
+* Interpretability
+* Parsimony / Occam's razor
+* great example for explaining general concepts in machine learning / data science
+
+
+
+### Brain weight and body weight: can we predict one from the other?
+
+* "mammals" dataset: average brain and body weights for 62 species of land mammals
+
+```{r}
+library(MASS)
+library(ggplot2)
+data("mammals")
+head(mammals)
+summary(mammals)
+```
+
+
+* For ease of doing so, we might first check the correlation coefficient:
+
+```{r}
+cor(mammals)
+```
+
+However
+
+```{r}
+ggplot(mammals, aes(body, brain)) + geom_point()
+```
+
+
+### An optimization problem
+
+#### Least Squares
+
+* Finding the best way of predicting brain weight from body weight is an optimization problem
+* We will choose a _cost function_ (or _loss function_) and seek to minimize its value
+* the loss function chosen in regression (and many other algorithms) is _Least Squares_
+* We want to minimise the sum of the squared deviations of the predictions from the target:
+$$  $$
+
+
+* Imagine if we had just one value to pick in our prediction.
+
+
+#### Fitting a line
+
+* In linear regression, instead of predicting the same point for every value, we want to fit a line through the the data so we can predict $y$ (brain weight) from $x$ (body weight):
+
+$$  $$
+
+
+* However, there are several lines we could fit here...
+
+```{r}
+
+```
+
+* How do we find the best line?
+* Again, we use the _Least Squares_
