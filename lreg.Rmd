@@ -16,7 +16,7 @@ output:
 
 ### Brain weight and body weight: can we predict one from the other?
 
-* "mammals" dataset: average brain and body weights for 62 species of land mammals
+We'll use the "mammals" dataset: average brain and body weights for 62 species of land mammals
 
 ```{r}
 library(MASS)
@@ -27,18 +27,24 @@ summary(mammals)
 ```
 
 
-* For ease of doing so, we might first check the correlation coefficient:
+We check out the correlation coefficient...
 
 ```{r}
 cor(mammals)
 ```
 
-However
+... and, very pleased to see such a high number, immediately start with the regression... or should we?
+Let's first _look_ at the data:
 
 ```{r}
 ggplot(mammals, aes(body, brain)) + geom_point()
 ```
 
+In linear regression, we will fit a line through the data points. Imagine the point in the upper right was not there.
+Would we still fit the same line? No.
+
+With datasets like this one, you are forced to think about how to handle points like this - points that highly influence the resulting fit. However, in this introductory course, we don't have time to discuss this.
+Instead, we focus on the mechanics of simple (one-predictor) linear regression. However, you've been warned ;-)
 
 ### An optimization problem
 
@@ -48,24 +54,183 @@ ggplot(mammals, aes(body, brain)) + geom_point()
 * We will choose a _cost function_ (or _loss function_) and seek to minimize its value
 * the loss function chosen in regression (and many other algorithms) is _Least Squares_
 * We want to minimise the sum of the squared deviations of the predictions from the target:
-$$  $$
 
+$$\sum_{i=1}^n (y_i - \hat y_i)^2$$
 
 * Imagine if we had just one value to pick in our prediction.
+* Then the value that would minimise the cost would be the mean of y, $\bar y$:
+
+```{r}
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_hline(yintercept = mean(mammals$brain), color = 'red' )
+```
+
+* The sum of squared errors would be
+
+```{r, message=FALSE}
+library(dplyr)
+(mammals$brain - mean(mammals$brain))^2 %>% sum()
+```
+
 
 
 #### Fitting a line
 
 * In linear regression, instead of predicting the same point for every value, we want to fit a line through the the data so we can predict $y$ (brain weight) from $x$ (body weight):
 
-$$  $$
+$$y = \beta_0 + \beta_1 x$$
 
 
-* However, there are several lines we could fit here...
+* However, there is an infinite number of lines we could fit here...
+
+```{r}
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_abline(intercept = 40, slope = 0.9, color = 'blue') + 
+  geom_abline(intercept = 100, slope = 0.95, color = 'green') +
+  geom_abline(intercept = 100, slope = 0.8, color = 'red') +
+  geom_abline(intercept = 140, slope = 0.85, color = 'cyan') 
+```
+
+
+* How do we find the best line?
+* Again, we use the _Least Squares_: we want to minimize
+$$\sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_i))^2$$
+
+* Solving this yields
+
+$$\hat \beta_1 = Cor(y, x) \frac{sd(y)}{sd(x)} , \hat \beta_0 = \bar y - \hat \beta_1 \bar x$$
+
+In R, we use lm() to do the calculations for us:
+
+```{r}
+fit <- lm("brain ~ body", data = mammals)
+fit
+```
+
+This tells us that with every additional kg of body mass, brain mass increases by about 1g.
+We can plot the best fit:
+
+```{r}
+intercept <- fit$coefficients[1]
+slope <- fit$coefficients[2]
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_abline(intercept = intercept, slope = slope, color = 'cyan') 
+```
+
+Let's compare the sum of squared errors with the value we obtained before, when just predicting the mean for every data point:
 
 ```{r}
 
+(mammals$brain - (intercept + slope * mammals$body))^2 %>% sum()
 ```
 
-* How do we find the best line?
-* Again, we use the _Least Squares_
+As we see, we have reduced the sum of squared errors quite a bit.
+
+We get diagnostic  and goodness of fit information using summary():
+
+```{r}
+summary(fit)
+```
+
+#### Goodness of fit
+
+* Regressing on a predictor can be seen as explaining away part of the uncertainty.
+* $R^2$ is a measure of which proportion of the variance was explained by the regression
+* Compare the original variation in the data with the variation left over after regressing on body weight: 
+
+```{r}
+model1 <- lm(brain ~ 1, data = mammals)
+model2 <- lm(brain ~ body, data = mammals)
+residuals <- c(resid(model1), resid(model2))
+model = factor(c(rep("intercept only", nrow(mammals)),
+               rep("intercept and slope", nrow(mammals))))
+g = ggplot(data_frame(e = residuals, fit = model), aes(y = residuals, x = model, color = fit, fill = fit))
+g = g + geom_dotplot(binaxis = "y", dotsize = 15, stackdir = "center", binwidth = 7)
+g = g + xlab("Model")
+g = g + ylab("Residual")
+g
+```
+
+
+
+#### Predictions
+
+* With the formula we obtained, we can now predict new values (shown in red):
+
+```{r}
+body_new <- c(20, 100, 200, 1000, 2000)
+brain_new <- predict(fit, newdata = data_frame(body = body_new))
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_point(data = data_frame(body = body_new, brain = brain_new), color = 'red', size = 3) + 
+  geom_abline(intercept = intercept, slope = slope, color = 'cyan') 
+```
+
+
+* However, let's not forget about uncertainty:
+    + the parameter estimations are uncertain (uncertainty of the estimation)
+    + the predictions are even more uncertain (as $y$ is not a 100% determined by $x$)
+
+* Here are the predictions again, with both types of uncertainty displayed:
+
+```{r, message=FALSE}
+library(gridExtra)
+fit <- lm("brain ~ body", data = mammals)
+body_new = seq(min(mammals$body), max(mammals$body), length = 100)
+brain_new_p1 <- as.data.frame(predict(fit, newdata = data_frame(body = body_new), interval = ("confidence")))
+brain_new_p1 <- brain_new_p1 %>% mutate(x = body_new)
+brain_new_p2 <- as.data.frame(predict(fit, newdata = data_frame(body = body_new), interval = ("prediction")))
+brain_new_p2 <- brain_new_p2 %>% mutate(x = body_new)
+g1 <- ggplot(brain_new_p1, aes(x, fit)) + geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'cyan', alpha = 0.2) +
+  geom_abline(intercept = fit$coefficients[1], slope = fit$coefficients[2], color = 'cyan', size = 1) + 
+  ggtitle('Point predictions, with confidence intervals')
+g2 <- ggplot(brain_new_p2, aes(x, fit)) + geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'cyan', alpha = 0.2) +
+  geom_abline(intercept = fit$coefficients[1], slope = fit$coefficients[2], color = 'cyan', size = 1) +
+  ggtitle('Point predictions, with prediction intervals')
+grid.arrange(g1, g2, ncol=2)
+```
+
+
+#### One last thing ... ALWAYS plot the data
+
+* The "anscombe" dataset contains 8 variables, $x1$ - $x4$ and $y1$ - $y4$. If we regress every y variable on its corresponding x variable, we get 4 nice regressions with an $R^2$ of ~ 0.66:
+
+```{r}
+data("anscombe")
+summary(lm(y1 ~ x1, data = anscombe))$r.squared
+summary(lm(y2 ~ x2, data = anscombe))$r.squared
+summary(lm(y3 ~ x3, data = anscombe))$r.squared
+summary(lm(y4 ~ x4, data = anscombe))$r.squared
+```
+
+
+So do we have 4 instances of nicely explained variables? How does the data actually _look_?
+
+```{r, echo=FALSE}
+ff <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  mods[[i]] <- lmi <- lm(ff, data = anscombe)
+}
+
+op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13))
+  abline(mods[[i]], col = "blue")
+}
+mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
+par(op)
+```
+
+
+#### The obligatory cliff hanger
+
+* these are just the basics of (one-variable) linear regression...
+* for example, $R^2$ has its flaws as a goodness-of-fit measure...
+* and, as we saw, outliers can be a problem we have to deal with...
+* and, we will normally have more than one possible predictor...
+* and, we will often not restrict ourselves to linear relationships...
+* ... for the sequel on linear regression, see you in one of our data science classes!
+

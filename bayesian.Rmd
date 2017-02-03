@@ -15,6 +15,7 @@ output:
 * the prior information and the data are combined using Bayes Theorem:
 
 $$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+
 * the different items being
     + the prior probability of the hypothesis/parameter \(P(A)\)
     + the likelihood of the data, given the hypothesis/parameter \(P(B|A)\)
@@ -24,12 +25,12 @@ $$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
 
 ### Bayesian updating
 
-* from Bayes' theorem follows the idea of _Bayesian updating_
+* from Bayes theorem follows the idea of _Bayesian updating_
 * Let's do an example.
 
 We want to estimate the bias of a curious-looking coin we've never seen before, and we're skepticists, so we assume no value is more probable a priori than another. So, we choose a uniform distribution for our prior:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(dplyr)
 x <- seq(0,1,0.001)
@@ -97,7 +98,44 @@ As we see, our belief gets more dense in the middle part of the distribution, bu
     + solution: Markov Chain Monte Carlo
     
 * Markov Chain Monte Carlo    
+    + draw samples from an unknown [posterior] distribution
+    + prominent algorithms: Metropolis-Hastings, Gibbs sampling, Hamiltonian Monte Carlo
+    + example: Metropolis-Hastings in R
     
+    
+Example: King Markov
+    
+```{r}
+# King Markov example from McElreath's Statistical Rethinking
+# In the long run, each island will be visited according to its population size
+num_weeks <- 1e5 # number of weeks to plan
+positions <- rep(0,num_weeks) # where the King was at
+# islands are ordered from 1 to 10, according to their population size
+# numbers are proportions: island 2 has twice as big a population as island 1, island 3 has 3x as big a population, etc.
+current <- 1 # current island
+for ( i in 1:num_weeks ) {
+    # record current position
+    positions[i] <- current
+
+    # flip coin to generate proposal to go left or right
+    proposal <- current + sample( c(-1,1) , size=1 )
+    # now make sure he loops around the archipelago
+    if ( proposal < 1 ) proposal <- 10
+    if ( proposal > 10 ) proposal <- 1
+
+    # move?
+    prob_move <- proposal/current
+    # if proposal > current: move
+    # if proposal < current: flip a coin and move or stay accordingl
+    current <- ifelse( runif(1) < prob_move , proposal , current )
+}
+```
+
+Where the King ended up during the first 100 days:
+
+```{r}
+ggplot(data_frame(x = 1:100, y = positions[1:100]), aes(x,y)) + geom_point()
+```
 
 
 
@@ -156,16 +194,12 @@ ggplot(data_frame(pred1 = pred1, pred2 = pred2), aes(x = pred1)) +
 As we see, the predictions from the entire distribution are more spread out, thus better conveying the uncertainty.
 
 
-
-### Bayes in machine learning
-
-
 ### Read on
 
 As we don't have the time to cover more of Bayesian statistics, here are my recommendations:
 
 * Statistical Rethinking, by Richard McElreath. Great for understanding the concepts, what really matters, and why it matters
 * Doing Bayesian Data Analysis, by John Krusche. 
-* , by Andew Gelman. Advanced stuff.
+* Bayesian Data Analysis, by Andew Gelman. Advanced stuff.
 
 
