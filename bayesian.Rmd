@@ -4,9 +4,7 @@ output:
   html_document
 ---
   
-## The Bayesian Way
-  
-### Uncertainty
+## Uncertainty
 
 * in frequentist statistics, the true parameters are fixed, and the data is random
 * in Bayesian statistics, the data is given; what's uncertain are the parameters
@@ -23,7 +21,7 @@ $$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
     + the posterior probability of the hypothesis/parameter, given the data \(P(A|B)\)
 
 
-### Bayesian updating
+## Bayesian updating
 
 * from Bayes theorem follows the idea of _Bayesian updating_
 * Let's do an example.
@@ -90,7 +88,7 @@ As we see, our belief gets more dense in the middle part of the distribution, bu
 
 
 
-### Computation and Markov Chain Monte Carlo
+## Computation and Markov Chain Monte Carlo
 
 * Until recently, using Bayesian models was severely restricted due to computational problems:
     + if not using conjugate distributions, exactly computing the integral in the denominator may be unfeasible
@@ -139,7 +137,7 @@ ggplot(data_frame(x = 1:100, y = positions[1:100]), aes(x,y)) + geom_point()
 
 
 
-### Communicating uncertainty
+## Communicating uncertainty
 
 * Having obtained a posterior distribution for the unknown parameter, we now want to predict new data
 * We do this by generating data from the posterior distribution we obtained
@@ -194,7 +192,7 @@ ggplot(data_frame(pred1 = pred1, pred2 = pred2), aes(x = pred1)) +
 As we see, the predictions from the entire distribution are more spread out, thus better conveying the uncertainty.
 
 
-### Read on
+## Read on
 
 As we don't have the time to cover more of Bayesian statistics, here are my recommendations:
 

@@ -71,7 +71,7 @@ output:
 ```{r child = 'bayesian.Rmd'}
 ```
 
-# A quick primer on linear regression
+# A short primer on linear regression
 
 ```{r child = 'lreg.Rmd'}
 ```

@@ -4,9 +4,7 @@ output:
   html_document
 ---
   
-## Linear Regression
-  
-### Why linear regression?
+## Why linear regression?
 
 * Interpretability
 * Parsimony / Occam's razor
@@ -14,7 +12,7 @@ output:
 
 
 
-### Brain weight and body weight: can we predict one from the other?
+## Brain weight and body weight: can we predict one from the other?
 
 We'll use the "mammals" dataset: average brain and body weights for 62 species of land mammals
 
@@ -46,9 +44,7 @@ Would we still fit the same line? No.
 With datasets like this one, you are forced to think about how to handle points like this - points that highly influence the resulting fit. However, in this introductory course, we don't have time to discuss this.
 Instead, we focus on the mechanics of simple (one-predictor) linear regression. However, you've been warned ;-)
 
-### An optimization problem
-
-#### Least Squares
+## An optimization problem: Least Squares
 
 * Finding the best way of predicting brain weight from body weight is an optimization problem
 * We will choose a _cost function_ (or _loss function_) and seek to minimize its value
@@ -73,8 +69,7 @@ library(dplyr)
 ```
 
 
-
-#### Fitting a line
+## Fitting a line
 
 * In linear regression, instead of predicting the same point for every value, we want to fit a line through the the data so we can predict $y$ (brain weight) from $x$ (body weight):
 
@@ -132,7 +127,7 @@ We get diagnostic  and goodness of fit information using summary():
 summary(fit)
 ```
 
-#### Goodness of fit
+## Goodness of fit
 
 * Regressing on a predictor can be seen as explaining away part of the uncertainty.
 * $R^2$ is a measure of which proportion of the variance was explained by the regression
@@ -153,7 +148,7 @@ g
 
 
 
-#### Predictions
+## Predictions
 
 * With the formula we obtained, we can now predict new values (shown in red):
 
@@ -190,7 +185,7 @@ grid.arrange(g1, g2, ncol=2)
 ```
 
 
-#### One last thing ... ALWAYS plot the data
+## One last thing ... ALWAYS plot the data
 
 * The "anscombe" dataset contains 8 variables, $x1$ - $x4$ and $y1$ - $y4$. If we regress every y variable on its corresponding x variable, we get 4 nice regressions with an $R^2$ of ~ 0.66:
 
@@ -225,7 +220,7 @@ par(op)
 ```
 
 
-#### The obligatory cliff hanger
+## The obligatory cliff hanger
 
 * these are just the basics of (one-variable) linear regression...
 * for example, $R^2$ has its flaws as a goodness-of-fit measure...
