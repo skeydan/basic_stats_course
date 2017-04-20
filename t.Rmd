@@ -49,7 +49,7 @@ n <- 9
 * Let's generate some sample data and compare the obtained mean against a hypothesized theoretical mean.
 * We perform a two-sided test because our hypotheses are:
     + $H_0$: the mean in this sample is equal to the population mean, $\mu = 1000$
-    # $H_1$: the mean in this sample is different from the population mean
+    + $H_1$: the mean in this sample is different from the population mean
 * We choose an alpha of 0.05, or equivalently, a confidence level of 0.95
 
 ```{r}
@@ -57,7 +57,7 @@ population_mean <- 1000
 simulation_mean <- 1002
 sd <- 2
 n <- 9
-data <- rnorm(n, mean = population_mean, sd = sd)
-data
-t.test(data, alternative = 'two.sided', mu = simulation_mean, conf.level = 0.95)
+data <- rnorm(n, mean = simulation_mean, sd = sd)
+t.test(data, alternative = 'two.sided', mu = population_mean, conf.level = 0.95)
 ```
+

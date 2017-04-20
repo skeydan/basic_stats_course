@@ -5,22 +5,22 @@ output: html_document
 
 ## Hypothesis testing
 
-### Hypothesis testing: the Setting
+### Hypothesis testing: the setting
 
-* In classical hypothesis testing, the task is to decide between two decisions:
+* In classical hypothesis testing, the task is to decide between two alternatives:
     + the null hypothesis $H_0$: the default we're assuming (just in order to reject it)
     + the alternative hypothesis $H_1$: the thing we really would like to show to be correct, the thing we're collecting evidence for
 * We can __never__ prove that $H_0$ is false, or that $H_1$ is true. We can only hope to assemble a lot of evidence in favor of $H_1$.
 * If we're successful, we say that under the assumption $H_0$ is true, the data we've collected is _(very) surprising_
 * Consequently, we say we're _rejecting_ $H_0$.
 
-### Hypothesis testing: Examples
+### Hypothesis testing: examples
 
 * $H_0$: The average temperature in Munich in January is 5 degrees Celsius; $H_1$: The average temperature in Munich in January is _not_ 5 degrees Celsius ($H_1$ undirected)
 * $H_0$: Men and women are equally good at learning languages; $H_1$: Women are better than men at learning languages ($H_1$ directed)
 * $H_0$: Marathon finisher times are independent of whether it rained during the race or not; $H_1$: There is a difference in marathon finisher times conditional on whether it was raining or not ($H_1$ undirected)
 
-### Hypothesis testing: the Logic
+### Hypothesis testing: the logic
 
 * How likely is the observed data, assuming $H_0$ is true?
 * Example:
@@ -50,11 +50,10 @@ ggplot(data_frame(x), aes(x)) + stat_function(fun = dnorm, args = list(mean = 30
     + $\bar X < 30 - 1.96*0.75 = 28.53$
 * With the mean of $27$ we obtained from our sample, we thus reject $H_0$ at $alpha = 0.05$
 * Had we chosen $alpha = 0.01$ instead, we would also have rejected $H_0$, because
-    + $\bar X = 27 < 30 + 2.58*0.75 = 31.94$, and
-    + $\bar X = 27 > 30 - 2.58*0.75 = 28.97$
+    + $\bar X = 27 < 30 - 2.58*0.75 = 28.07$
 
 
-### Hypothesis testing: Commonly used Metrics
+### Hypothesis testing: commonly used Metrics
 
 action/truth                | $\mathbf{H_0}$ is true   | $\mathbf{H_1}$ is true   | total
 -------------               | -------------            | -------------            | ---
@@ -74,7 +73,7 @@ __total__                   | $n_0$                    | $n - n_0$              
 
 &nbsp;
 
-### Related Metrics (used in e.g. retrieval, pattern recognition, data science)
+### Related metrics (used in e.g. retrieval, pattern recognition, data science)
 
 * __Sensitivity__ / Recall / True Positive Rate: proportion of correctly detected positives, $\frac{S}{n - n_0}$
 * __Specificity__ / True Negative Rate: proportion of negatives correctly identified as such, $\frac{U}{n_0}$

@@ -44,7 +44,7 @@ For our example of coin flips, the conjugate distributions are the beta and the 
 
 ```{r}
 x <- seq(0,1,0.001)
-# having flipped the coin once and seen a tail, we now have a beta(1,12) distribution for the posterior
+# having flipped the coin once and seen a tail, we now have a beta(1,2) distribution for the posterior
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,2))
 ```
 
@@ -62,7 +62,7 @@ Now, we get a head, and can rule out that there's just two tails:
 
 ```{r}
 x <- seq(0,1,0.001)
-# tail again - posterior is now beta(1,3) 
+# tail again - posterior is now beta(2,3) 
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(2,3))
 ```
 
@@ -197,7 +197,7 @@ As we see, the predictions from the entire distribution are more spread out, thu
 As we don't have the time to cover more of Bayesian statistics, here are my recommendations:
 
 * Statistical Rethinking, by Richard McElreath. Great for understanding the concepts, what really matters, and why it matters
-* Doing Bayesian Data Analysis, by John Krusche. 
+* Doing Bayesian Data Analysis, by John Kruschke. 
 * Bayesian Data Analysis, by Andew Gelman. Advanced stuff.
 
 

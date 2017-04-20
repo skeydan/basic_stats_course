@@ -47,7 +47,7 @@ $$ P(X = x; \mu, \sigma^2) = (2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}$$
 * mean: $\mu$
 * variance: $\sigma^2$
 
-* examples: TBD
+* example: measurement errors (if not systematic)
 
 Compare normal distributions with different variances:
 

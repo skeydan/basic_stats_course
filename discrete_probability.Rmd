@@ -23,14 +23,14 @@ $$P(X = x; p) =  p^x (1 - p)^{1 - x}$$
 
 ```{r}
 # generate 10 bernoulli random variables with p=0.5
-rbinom(10,1,0.5)
+rbinom(10, size = 1, prob = 0.5)
 # generate 10 bernoulli random variables with p=0.2
-rbinom(10,1,0.2)
+rbinom(10, size = 1, prob = 0.2)
 ```
 
 ```{r}
 # density of a bernoulli random variable, p = 0.9
-dbinom(1,1,0.2)
+dbinom(1, size = 1, prob = 0.2)
 ```
 
 &nbsp;
@@ -54,18 +54,19 @@ p^x(1 - p)^{n-x}$$
 
 ```{r}
 # generate 10 binomial random variables with 10 trials, p=0.2
-rbinom(10,10,0.2)
+rbinom(10, size = 10, prob = 0.2)
 ```
 
 ```{r}
 # generate 10 binomial random variables with 10 trials, p=0.9
-rbinom(10,10,0.9)
+rbinom(10, size = 10, prob = 0.9)
 ```
 
 ```{r}
 #How likely is it to obtain 4 successes in 6 trials when p=0.1?
-dbinom(4,6,0.1)
+dbinom(4, size = 6, prob = 0.1)
 ```
+
 
 ```{r, warning=FALSE, message=FALSE}
 library(ggplot2)

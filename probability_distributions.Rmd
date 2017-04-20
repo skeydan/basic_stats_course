@@ -77,9 +77,9 @@ runif(10, min = -10, max = 10)
 # probability density of a random value, drawn from a uniform distribution between 0 and 1
 dunif(0.1)
 # probability densities of 10 random values, drawn from a uniform distribution between 0 and 1
-dunif(seq(0,0.99,.1))
+dunif(seq(0,1,.1))
 # probability densities of 10 random values, drawn from a uniform distribution between -10 and 10
-dunif(seq(0,0.99,.1),min = -10, max = 10)
+dunif(seq(0,1,.1),min = -10, max = 10)
 ```
 
 #### Get cumulative probability:
@@ -87,9 +87,9 @@ dunif(seq(0,0.99,.1),min = -10, max = 10)
 # cumulative probability of a random value, drawn from a uniform distribution between 0 and 1
 punif(0.3)
 # cumulative probability of 10 random values, drawn from a uniform distribution between 0 and 1
-punif(seq(0,0.99,.1))
+punif(seq(0,1,.1))
 # cumulative probability of 10 random values, drawn from a uniform distribution between -10 and 10
-punif(seq(0,0.99,.1), min = -10, max = 10)
+punif(seq(0,1,.1), min = -10, max = 10)
 ```
 
 #### Get value corresponding to cumulative probability:
@@ -97,8 +97,8 @@ punif(seq(0,0.99,.1), min = -10, max = 10)
 # value corresponding to a cumulative probability, drawn from a uniform distribution between 0 and 1
 qunif(0.3)
 # values corresponding to cumulative probabilities, drawn from a uniform distribution between 0 and 1
-qunif(seq(0,0.99,.1))
+qunif(seq(0,1,.1))
 # cumulativeprobability of 10 random values, drawn from a uniform distribution between -10 and 10
-qunif(seq(0,0.99,.1), min = -10, max = 10)
+qunif(seq(0,1,.1), min = -10, max = 10)
 ```
 

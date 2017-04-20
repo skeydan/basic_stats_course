@@ -16,9 +16,9 @@ output: html_document
 
 * There are two families of measures:
     + g-family: e.g., Cohen's $d$
-    + r-family: e.g., r (the correlation coefficient)
+    + r-family: e.g., $r$ (the correlation coefficient)
 
-### Cohen's _d_
+### Cohen's d
 
 * Cohen's $d$ is the difference of means, in units of standard deviation:
 $$d = \frac{m_1 - m_2}{SD_{pooled}}$$ 
@@ -27,12 +27,12 @@ $$d = \frac{m_1 - m_2}{SD_{pooled}}$$
 $$t = \frac{m_1 - m_2}{SD_{pooled} * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
 $$d = t * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
 
-### $r$ and $R^2$
+### r and R^2
 
 * $r$ is the correlation coefficient, the (sample) covariance divided by the product of the (sample) standard deviations:
 $$r = \frac{\sum_i{(x_i - \bar x)(y_i - \bar y)}}{s_x s_y}$$
 
-* $R^2$, the coefficient of determination, indicates how much of variation in the dependent variable is explained by the  independent variable:
+* $R^2$, the coefficient of determination, indicates how much of the variation in the dependent variable is explained by the  independent variable:
 $$R^2 = 1 - \frac{SS_{res}}{SS_{total}}$$
 
 

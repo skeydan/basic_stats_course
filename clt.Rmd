@@ -67,7 +67,7 @@ sample_mean_of_means
 ```
 
 
-Now we can compare the means - and the mean of means - with the theoretical mean of the exponential(0.2) distribution, which is equal to the 1 over the parameter lambda:
+Now we can compare the means - and the mean of means - with the theoretical mean of the exponential(0.2) distribution, which is equal to 1 over the parameter lambda:
 
 ```{r}
 dist_mean <- 1/lambda

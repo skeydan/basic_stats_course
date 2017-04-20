@@ -39,6 +39,6 @@ $$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
 
 $$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
 
-* Classical examples: Medical test,
+* Classic example: Medical test
 
 &nbsp;

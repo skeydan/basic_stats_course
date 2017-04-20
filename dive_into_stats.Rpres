@@ -1,0 +1,2044 @@
+<style>
+ 
+.reveal div {
+  font-size: 0.8em;
+}
+
+.exclaim .reveal .state-background {
+  background: black;
+} 
+
+.exclaim .reveal h1,
+.exclaim .reveal h2,
+.exclaim .reveal p {
+  color: white;
+}
+
+.small-code pre code {
+  font-size: 0.8em;
+}
+
+</style>
+
+
+Dive into statistics
+========================================================
+author: Sigrid Keydana, Trivadis 
+date: 2/1/2017
+width: 1440
+incremental:false 
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Statistics and Inference</h1>
+
+
+Frequentist vs. Bayesian in a Nutshell 
+========================================================
+
+&nbsp; 
+
+&nbsp; 
+
+```{r, echo = FALSE, out.width = "350px"}
+knitr::include_graphics("xkcd.png")
+```
+
+Frequentist inference  
+========================================================
+
+&nbsp; 
+
+* probability = expected frequency of occurrence _in the long run_
+* all statistical assertions have always to be seen in the context of _the long run_
+* e.g.: control number of errors _in the long run_
+* instruments of classical (Fisherian) frequentist statistics lack intuitive meaning:
+    + confidence intervals
+    + p-values
+    + hypothesis testing
+* until recently, _the_ way to do statistical inference
+
+<table>
+<tr>
+<td><img src='xkcd2.png' width='200px' /></td><td><img src='t.jpg' width='200px'/></td><td><img src='fisher.jpg' width='200px'/></td>
+</tr>
+</table>
+
+Sources:  
+http://xkcd.com/1478  
+https://en.wikipedia.org/wiki/Ronald_Fisher  
+https://larspsyll.files.wordpress.com/2015/08/fisher-smoking.jpg
+
+&nbsp;
+
+
+Bayesian inference  
+========================================================
+
+&nbsp; 
+
+* probability is the quantification of _uncertainty_ 
+* combines prior knowledge with evidence from the data
+* can make assertions about individual events/entities
+* became much more popular recently because of hardware improvements
+
+<table>
+<tr>
+<td><img src='bt.jpg' width='200px' /></td><td><img src='bayes.jpg' width='200px'/></td><td><img src='laplace.jpg' width='200px'/></td>
+</tr>
+</table>
+
+Sources:  
+https://en.wikipedia.org/wiki/Bayes_theorem  
+https://en.wikipedia.org/wiki/Pierre-Simon_Laplace  
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Probability</h1>
+
+
+
+
+Fundamental axioms of probability (Kolmogorov)
+========================================================
+
+1. The probability of any event is a positive real number.
+2. The probability that _some_ event will occur is 1.
+3. For any two disjoint events or sets of events \(e\) and \(f\), the probability of \(e\) _or_ \(f\) occurring is \(P(e) + P(f)\).
+
+&nbsp;
+
+
+Probability of event A or event B happening: \(P(A\cup B)\)
+========================================================
+
+* Disjoint events (see axiom 3 above): $$P(A\cup B)=P(A)+P(B)$$
+* Non-disjoint events: $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
+
+&nbsp;
+
+
+Probability of event A and event B happening: \(P(A\cap B)\)
+========================================================
+
+* General formulation:
+
+$$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A)$$
+
+* For independent events:
+
+$$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A) = P(A) * P(B)$$
+
+&nbsp;
+
+
+Independent events
+========================================================
+
+* Events are _independent_ if
+
+$$P(A \cap B) = P(A)P(B)$$
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Conditional Probability</h1>
+
+
+Conditional Probability: Definition
+========================================================
+
+### Definition
+
+* Probabilities change when _conditioning_ on additional information.
+* Probability of \(A\) given \(B\):
+
+$$P(A | B) = \frac{P(A \cap B)}{P(B)}$$
+
+
+* If \(A\) and \(B\) are independent:
+
+$$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
+
+&nbsp;
+
+
+Conditioning matters
+========================================================
+
+* Probability of being struck by lightning vs. probability of being struck by lightning, provided you go out in the woods in a heavy thunderstorm
+* Probability of contracting rare hereditary disease XYZ vs. probability of contracting rare hereditary disease XYZ, given parents have it
+
+&nbsp;
+
+
+Bayes Theorem
+========================================================
+
+* Prior probability \(P(A)\)
+* Likelihood \(P(B|A)\)
+* Evidence \(P(B)\)
+* Posterior probability \(P(A|B)\)
+
+$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+
+* Classic example: Medical test
+
+&nbsp;
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Probability distributions</h1>
+
+
+Random Variables
+========================================================
+ 
+
+* A random variable models the numerical outcome of an experiment
+* Random variables come in two flavours:
+    + discrete: can take on only a countable number of possibilities
+    + continuous: can take any value on [a subset of] the real number line 
+* Examples:
+    + Die rolls are discrete random variables, where every outcome between 1 and 6 is equally likely ($P(X = x) = \frac{1}{6}$)
+    + Test results are mostly regarded as continuous random variables, with an average value and a spread
+ 
+
+Probability mass/density function (PMF/PDF)    
+========================================================
+
+* Discrete random variables have probability mass functions
+    + every possible outcome is assigned a probability
+* Continuous random variables have probability density functions
+    + probability at any given _point_ is 0, can only meaningfully specify probabilities for _intervals_
+ 
+  
+Cumulative distribution function (CDF)  
+========================================================
+
+* The cumulative distribution function (CDF) designates the probability that the random variable is less than or equal to some value x:
+$$F(x)=P(X \leq x)$$
+
+* Examples:
+    + Die rolls: $P(X \leq 3) = 0.5$
+    + For a standardized IQ test, $P(X \leq 100) = 0.5$
+
+
+Quantiles
+========================================================
+
+* Related to cumulative distribution functions are _quantiles_ (or _percentiles_, when multiplied by 100).
+* The  $\alpha^{th}$ quantile of a distribution with distribution function $F$ is the point $x_\alpha$ so that
+
+$$F(x_\alpha) = \alpha$$
+
+* Examples:
+    + the 0.95 quantile of a distribution is the point so that 95% of the density lies below it.
+    + the 0.5 quantile is the _median_, the point such that 50% of the density lies below it
+    + so, the median of the "roll dice distribution" is 3.5
+* Important quantiles
+    + 0.025, 0.05: often used in hypothesis testing
+    + .25: first quartile, 25%
+    + .5 median, 50%
+    + .75 third quartile, 75%
+    + 0.975, 0.95: often used in hypothesis testing
+
+
+Handling probability distributions in R
+========================================================
+
+For every probability distribution, there are 4 functions in R:
+
+* r<...>: generates a random value from the distribution
+* d<...>: gives the density/mass for a value
+* p<...>: gives the cumulative probability for a quantile
+* q<...>: gives the corresponding value for a cumulative probability (quantile function)
+
+Examples...
+
+Generate random variables:
+========================================================
+
+```{r}
+# generate one random value from a uniform distribution between 0 and 1
+runif(1)
+# generate 10 random values from a uniform distribution between 0 and 1
+runif(10)
+# generate 10 random values from a uniform distribution between -10 and 10
+runif(10, min = -10, max = 10)
+```
+
+Get density:
+========================================================
+
+```{r}
+# probability density of a random value, drawn from a uniform distribution between 0 and 1
+dunif(0.1)
+# probability densities of 10 random values, drawn from a uniform distribution between 0 and 1
+dunif(seq(0, 1,.1))
+# probability densities of 10 random values, drawn from a uniform distribution between -10 and 10
+dunif(seq(0,1,.1),min = -10, max = 10)
+```
+
+Get cumulative probability:
+========================================================
+
+```{r}
+# cumulative probability of a random value, drawn from a uniform distribution between 0 and 1
+punif(0.3)
+# cumulative probability of 10 random values, drawn from a uniform distribution between 0 and 1
+punif(seq(0,1,.1))
+# cumulative probability of 10 random values, drawn from a uniform distribution between -10 and 10
+punif(seq(0,1,.1), min = -10, max = 10)
+```
+
+Get value corresponding to cumulative probability:
+========================================================
+
+```{r}
+# value corresponding to a cumulative probability, drawn from a uniform distribution between 0 and 1
+qunif(0.3)
+# values corresponding to cumulative probabilities, drawn from a uniform distribution between 0 and 1
+qunif(seq(0,1,.1))
+# cumulativeprobability of 10 random values, drawn from a uniform distribution between -10 and 10
+qunif(seq(0,1,.1), min = -10, max = 10)
+```
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Expected values</h1>
+
+
+
+Statistical inference and expected values
+========================================================
+
+In the "real world", we mostly do not have access to the "true" probability distribution.
+
+Instead, we _estimate_ characteristics of the _population_ from a _sample_.
+
+Concretely, we estimate _expected values_ of a population from _sample statistics_:
+
+* population mean from sample mean
+* population variance from sample variance
+
+
+
+Mean / expected value of a distribution
+========================================================
+
+The expected mean $$E[X] = \sum_x x*p(x)$$ of a discrete probability distribution is estimated from the sample mean $$\bar X = \sum_{i=1}^n x_i  * p(x_i)$$.
+
+The sample mean is the center of mass of the observed values.
+
+
+Example: Calculating means with R
+========================================================
+
+
+```{r}
+# roll dice 6 times
+roll_dice <- sample(1:6, 6, replace = TRUE)
+roll_dice
+mean(roll_dice)
+
+# roll dice 60 times
+roll_dice <- sample(1:6, 60, replace = TRUE)
+mean(roll_dice)
+
+# roll dice 600 times
+roll_dice <- sample(1:6, 600, replace = TRUE)
+mean(roll_dice)
+```
+
+
+Variance (1)
+========================================================
+
+The variance indicates how spread out a distribution is.
+
+```{r, warning=FALSE, message=FALSE}
+library(ggfortify)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
+ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
+```
+
+
+Variance (2)
+========================================================
+
+Again, we distinguish between population variance and sample variance.
+
+The population variance is defined as
+
+$$Var(X) = E[(X - \mu)^2] = E[X^2] - E[X]^2$$
+
+The sample variance is
+$$S^2 = \frac{\sum_{i=1} (X_i - \bar X)^2}{n-1}$$
+
+
+Example: Calculating variances with R
+========================================================
+
+
+```{r}
+# roll dice 6 times
+roll_dice <- sample(1:6, 6, replace = TRUE)
+roll_dice
+var(roll_dice)
+
+# roll dice 60 times
+roll_dice <- sample(1:6, 60, replace = TRUE)
+var(roll_dice)
+
+# roll dice 600 times
+roll_dice <- sample(1:6, 600, replace = TRUE)
+var(roll_dice)
+```
+
+
+Standard deviation
+========================================================
+
+The square root of the variance is called the _standard deviation_.
+
+* In contrast to the variance, the standard deviation has the same unit as the data (and the mean)
+* In R:
+```{r}
+roll_dice <- sample(1:6, 600, replace = TRUE)
+paste0("Variance: ", var(roll_dice), ", standard deviation: ", sd(roll_dice))
+```
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Discrete Probability Distributions</h1>
+
+
+
+Bernoulli Distribution (1)
+========================================================
+
+* outcome is binary with values 0 or 1
+* parameter(s): p = probability of success (1)
+* examples: coin flips, rain vs. no rain, ...
+* distribution:
+
+$$P(X = x; p) =  p^x (1 - p)^{1 - x}$$
+
+* mean: $p$
+* variance: $p * (1-p)$
+
+
+Bernoulli Distribution (1)
+========================================================
+
+```{r}
+# generate 10 bernoulli random variables with p=0.5
+rbinom(10, size = 1, prob = 0.5)
+# generate 10 bernoulli random variables with p=0.2
+rbinom(10, size = 1, prob = 0.2)
+```
+
+```{r}
+# density of a bernoulli random variable, p = 0.9
+dbinom(1, size = 1, prob = 0.2)
+```
+
+&nbsp;
+
+Binomial distribution (1)
+========================================================
+
+* sum of IID (independent and identically distributed) Bernoulli trials
+* examples: number of tails in 5 coin flips, number of leads closed, ...
+* parameter(s): n = number of trials, k = number of successes, p = probability of success
+
+$$P(X = x; n,p) = 
+\left(
+\begin{array}{c}
+  n \\ x
+\end{array}
+\right)
+p^x(1 - p)^{n-x}$$
+
+* mean: $np$
+* variance: $np(1-p)$
+
+
+Binomial distribution (2)
+========================================================
+
+
+```{r}
+# generate 10 binomial random variables with 10 trials, p=0.2
+rbinom(10, size = 10, prob = 0.2)
+```
+
+```{r}
+# generate 10 binomial random variables with 10 trials, p=0.9
+rbinom(10, size = 10, prob = 0.9)
+```
+
+```{r}
+#How likely is it to obtain 4 successes in 6 trials when p=0.1?
+dbinom(4, size = 6, prob = 0.1)
+```
+
+Binomial distribution (3)
+========================================================
+class:small-code
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+# Plot various binomial distributions
+n <- 10
+k <- seq(0,10,1)
+g1 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dbinom, args = list(size = 10, p = 0.2), geom = "bar", fill = "blue")
+g2 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dbinom, args = list(size = 10, p = 0.4), geom = "bar", fill = "green")
+g3 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dbinom, args = list(size = 10, p = 0.5), geom = "bar", fill = "violet")
+g4 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dbinom, args = list(size = 10, p = 0.9), geom = "bar", fill = "cyan")
+grid.arrange(g1,g2, g3, g4, ncol=2, nrow=2, top="Binomial distributions for different p")
+```
+
+
+Binomial distribution (4)
+========================================================
+class:small-code
+
+```{r, warning=FALSE, message=FALSE}
+# Corresponding cumulative distributions
+n <- 10
+k <- seq(0,10,1)
+g1 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = pbinom, args = list(size = 10, p = 0.2), geom = "quantile",
+                                                    color = "blue")
+g2 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = pbinom, args = list(size = 10, p = 0.4), geom = "quantile",
+                                                    color = "green")
+g3 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = pbinom, args = list(size = 10, p = 0.5), geom = "quantile",
+                                                    color = "violet")
+g4 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = pbinom, args = list(size = 10, p = 0.9), geom = "quantile",
+                                                    color = "cyan")
+grid.arrange(g1,g2, g3, g4, ncol=2, nrow=2, top="Corresponding cumulative distributions")
+```
+
+
+Poisson distribution (1)
+========================================================
+
+
+* used to model counts
+* examples: number of add clicks per time interval, number of laptop crashes, ...
+* with n very large and p very small, is an accurate approximation of the binomial distribution
+* parameter(s): $\lambda$ = mean and variance of the distribution 
+
+$$P(X = x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}$$
+
+* mean: $\lambda$
+* variance: $\lambda$
+
+
+Poisson distribution (2)
+========================================================
+class:small-code
+
+```{r, warning=FALSE, message=FALSE}
+n <- 10
+k <- seq(0,20,1)
+g1 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dpois, args = list(lambda = 1), geom = "bar",
+                                                    fill = "blue")
+g2 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dpois, args = list(lambda = 2), geom = "bar",
+                                                    fill = "green")
+g3 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dpois, args = list(lambda = 4), geom = "bar",
+                                                    fill = "violet")
+g4 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = dpois, args = list(lambda = 10), geom = "bar",
+                                                    fill = "cyan")
+grid.arrange(g1,g2, g3, g4, ncol=2, nrow=2, top="Poisson distributions for different lambda")
+```
+
+Poisson distribution (3)
+========================================================
+class:small-code
+
+```{r, warning=FALSE, message=FALSE}
+n <- 10
+k <- seq(0,20,1)
+g1 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = ppois, args = list(lambda = 1), geom = "quantile",
+                                                    color = "blue")
+g2 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = ppois, args = list(lambda = 2), geom = "quantile",
+                                                    color = "green")
+g3 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = ppois, args = list(lambda = 4), geom = "quantile",
+                                                    color = "violet")
+g4 <- ggplot(data_frame(k), aes(k)) + stat_function(fun = ppois, args = list(lambda = 10), geom = "quantile",
+                                                    color = "cyan")
+grid.arrange(g1,g2, g3, g4, ncol=2, nrow=2, top="Corresponding cumulative distributions")
+```
+
+Poisson distribution (4)
+========================================================
+
+
+Use Poisson to model rates over time:
+
+* $t$ = total elapsed time
+* expected count per unit of time: $\lambda = E[X / t]$ 
+* distribution: $X \sim Poisson(\lambda t)$
+
+Poisson distribution (5)
+========================================================
+
+
+Rates example:
+* cars approaching motorway exit <fill in your favorite bottleneck location here>
+* number of cars arriving per minute (on average): 12
+* What is the probability that exactly 0 cars arrive in one minute? 
+
+```{r}
+dpois(0, lambda=12)
+```
+
+* Let's observe for 10 minutes in total
+* What is the probability that fewer than 40 cars arrive during these 10 minutes? 
+
+```{r}
+ppois(80, lambda=12*10)
+```
+
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Continuous Probability Distributions</h1>
+
+
+
+Uniform Distribution (1)
+========================================================
+
+
+* valid between a minimum and a maximum value
+* all intervals _of the same length_ between the minimum and the maximum values are equally probable
+
+$$ P(X = x; a,b) = \frac{1}{b - a}, x \in [a,b]$$
+
+* application: often used as a prior distribution when we have no prior knowledge
+* examples for discrete version of uniform distribution: die rolls
+* mean: $\frac{1}{2} (a+b)$
+* variance: $\frac{1}{12}(b-a)^2$
+
+
+Uniform Distribution (2)
+========================================================
+class:small-code
+
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+n <- 10
+k <- seq(0,10,0.01)
+minval = 3
+maxval = 7
+ggplot(data_frame(k), aes(k, dunif(k, minval, maxval))) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
+  ggtitle("Uniform distribution example")
+ggplot(data_frame(k), aes(k, punif(k, minval, maxval))) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
+  ggtitle("Corresponding cumulative distribution")
+```
+
+
+Normal / Gaussian Distribution (1)
+========================================================
+
+* the famous "bell curve"
+* characterized by mean $\mu$ and variance $\sigma^2$:
+
+$$ P(X = x; \mu, \sigma^2) = (2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}$$
+
+* mean: $\mu$
+* variance: $\sigma^2$
+
+* example: measurement errors (if no systematic bias)
+
+
+Normal / Gaussian Distribution (2)
+========================================================
+
+Different variances: PDFs ...
+
+```{r, warning=FALSE, message=FALSE}
+library(ggfortify)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
+ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
+```
+
+
+Normal / Gaussian Distribution (3)
+========================================================
+
+... and CDFs:
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
+p <- ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
+ggdistribution(pnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
+```
+
+Normal / Gaussian Distribution (4)
+========================================================
+
+* many processes in nature follow a Gaussian distribution, because they _add up many many small fluctuations_
+* for a given mean and variance, the Gaussian is the maximum entropy (least informative) distribution, the one that can come about in the largest number of ways
+
+
+Normal / Gaussian Distribution (5)
+========================================================
+
+Adding up small fluctuations: example
+
+* Say you're standing on a road, together with 10 other people, and repeatedly flip a coin. If it turns up heads, you turn left, if it turns up tails, you turn right. (The other people do the same, flipping coins and turning either left or right.) Say all of you flip the coin 10 times. How will the group of you be distributed on the road?
+* Now say you are not 11 people, but 111. How will the distribution look now?
+* Finally, how about if there were 1111 people of you doing this?
+
+Normal / Gaussian Distribution (6)
+========================================================
+
+
+```{r}
+xs <- lapply(c(11,111,1111), function(x) {replicate(x, sum(sample(c(-1,1), 10, replace = TRUE)))})
+plots <- lapply(xs, function(x) {ggplot(data_frame(x = x), aes(x)) + geom_histogram(binwidth = 1)})
+do.call('grid.arrange', list('grobs' = plots, 'ncol' = 3))
+```
+
+
+The larger the number of small fluctuations included, the more normal the distribution becomes.
+
+&nbsp;
+
+Standard normal distribution (1)
+========================================================
+
+If $\mu = 0, \sigma^2 =1$, we have a _standard normal_ distribution.
+
+```{r}
+x <- seq(-4, 4, 0.1)
+#y <- dnorm(x,0,1)
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dnorm, args = list(mean = 0, sd =1))
+```
+
+
+Standard normal distribution (2)
+========================================================
+
+
+The standard normal is tremendously important in statistics. 
+
+* ~ 68% of the standard normal density lies between $[\bar{x} - 1 sd, \bar{x} + 1 sd]$
+* ~ 95% of the standard normal density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
+* ~ 99% of the standard normal density lies between $[\bar{x} - 3 sd, \bar{x} + 3 sd]$
+
+
+Standard normal distribution (3)
+========================================================
+class: small-code
+
+```{r}
+normal_prob_area_plot <- function(lb, ub, mean = 0, sd = 1, limits = c(mean - 4 * sd, mean + 4 * sd), fcolor = "blue") {
+    x <- seq(limits[1], limits[2], length.out = 100)
+    xmin <- max(lb, limits[1])
+    xmax <- min(ub, limits[2])
+    areax <- seq(xmin, xmax, length.out = 100)
+    area <- data.frame(x = areax, ymin = 0, ymax = dnorm(areax, mean = mean, sd = sd))
+    (ggplot() + geom_line(data.frame(x = x, y = dnorm(x, mean = mean, sd = sd)), mapping = aes(x = x, y = y)) +
+        geom_ribbon(data = area, mapping = aes(x = x, ymin = ymin, ymax = ymax), fill = fcolor) + scale_x_continuous(limits = limits))
+}
+g1 <- normal_prob_area_plot(-3,3)
+g2 <- normal_prob_area_plot(-2,2, fcolor = "white")
+g3 <- normal_prob_area_plot(-1,1, fcolor = "green")
+grid.arrange(g3,g2,g1, ncol=2, nrow=2)
+```
+
+
+Standard normal distribution (4)
+========================================================
+
+Converting between standardized and non-standardized normals
+
+* to go from normal to standard normal:
+    + normal: $$X \sim N(\mu,\sigma^2)$$
+    + standard normal: $$Z = \frac{X -\mu}{\sigma} \sim N(0, 1)$$
+
+* to go from standard normal to normal:
+    + standard normal: $$Z \sim N(0, 1)$$
+    + normal: $$X = \mu + \sigma Z \sim N(\mu, \sigma^2)$$
+
+
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Central Limit Theorem</h1>
+
+
+What it's all about
+========================================================
+
+We now approach the process of inferring population characteristics from sample characteristics.
+
+
+The Law of Large Numbers (1)
+========================================================
+
+* In the limit of collecting an infinite amount of data, the sample mean of IID (independent and identically distributed) data is a perfect estimate of the population mean
+* the same is true for the sample variance and sample standard deviation
+* estimators for which that holds are called _consistent_ estimators
+
+
+
+
+The Law of Large Numbers (2)
+========================================================
+class: small-code
+
+* Example: Estimating the mean of roll dice
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(gridExtra)
+ns = c(10, 50, 1000, 10000)
+means <- sapply(ns, function(n) {cumsum(sample(1:6, n, replace = TRUE))/(1:n)})
+plots <- Map(function(n,m) {
+  ggplot(data.frame(x = 1:n, y = m), aes(x = x, y = y)) + geom_line() + labs(x = "Number of observations", y = "Cumulative mean") + scale_y_continuous(limits = c(1,6))}, ns, means) 
+do.call('grid.arrange', plots)
+```  
+
+
+
+Central Limit Theorem (1)
+========================================================
+
+* As sample size increases, the distribution of __averages__ of IID variables approaches the standard normal 
+* That is: $$\bar X_n \sim N(\mu, \sigma^2 / n)$$
+* Or: $$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$$
+* where the standard deviation divided by the square root of the sample size $$\sigma / \sqrt{n}$$ is the _standard error of the mean_.
+
+
+Central Limit Theorem (2)
+========================================================
+
+As an example for the CLT, we will sample 40 values from an exponential(0.2) distribution and do this a 1000 times.
+
+```{r}
+lambda <- 0.2
+nsim <- 1000
+n <- 40
+```
+
+Central Limit Theorem (3)
+========================================================
+
+We store the raw values ...
+
+```{r}
+c <- rexp(nsim * n, lambda)
+m <- matrix(c, nsim, n)
+```
+
+... the means of each 40-element sample ...
+
+```{r}
+means <- apply(m, 1, mean)
+head(means)
+```
+
+... as well as the mean of the sample means:
+
+```{r}
+sample_mean_of_means <- mean(means)
+sample_mean_of_means
+```
+
+Central Limit Theorem (4)
+========================================================
+
+We can compare the means - and the mean of means - with the theoretical mean of the exponential(0.2) distribution, which is equal to 1 over the parameter lambda:
+
+```{r}
+dist_mean <- 1/lambda
+dist_mean
+```
+
+Central Limit Theorem (5)
+========================================================
+class:small-code
+
+Let's look at a histogram of the 1000 means we obtained.
+Also displayed is the theoretical mean (red line) and the mean of means (black line).
+
+```{r, warning=FALSE,message=FALSE}
+library(dplyr)
+ggplot(data_frame(m = means), aes(means)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') + 
+  geom_vline(xintercept = dist_mean, color = 'red', size = 1) +  
+  geom_vline(xintercept = sample_mean_of_means, color = 'black', size = 1) +
+  ggtitle('Distribution of sample means from an exponential distribution, n=40')
+```
+
+Central Limit Theorem (6)
+========================================================
+
+As you see the theoretical mean and the mean of means are _very_ close.
+Let's check the numbers:
+
+```{r}
+paste0('Mean of exponential distribution is: ', dist_mean, '. Mean of sample means is: ', sample_mean_of_means)
+```
+
+Central Limit Theorem (7)
+========================================================
+
+Let's now compare the distribution of sample means to the distribution of the raw exponential data.
+First, here is a histogram of the means again:
+
+```{r}
+ggplot(data_frame(m = means), aes(means)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') +
+  ggtitle('Distribution of sample means from an exponential distribution, n=40')
+```
+
+Central Limit Theorem (8)
+========================================================
+class: small-code
+
+Here is a histogram of the raw data, with the empirical mean shown in black.
+We see that in contrast to the distribution of means, the exponential distribution of the raw data is heavily skewed.
+
+```{r}
+whole_sample_mean <- mean(c)
+ggplot(data_frame(c = c), aes(c)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') + 
+  geom_vline(xintercept = whole_sample_mean, color = 'black', size = 1) +
+  ggtitle('Distribution of exponentials, n=1000')
+```
+
+
+
+Central Limit Theorem (9)
+========================================================
+
+We can create quantile-quantile plots to check whether the means, and the raw data, respectively, are normally distributed. First, the means: We see that theoretical quantiles and sample quantiles match very well.
+
+```{r}
+qqnorm(means)
+```
+
+
+Central Limit Theorem (10)
+========================================================
+
+This is not at all the case for the raw data.
+
+```{r}
+qqnorm(c)
+```
+
+
+
+
+
+========================================================
+type:prompt
+
+&nbsp; 
+
+&nbsp; 
+
+<h1>Confidence Intervals</h1> 
+  
+  
+  From the CLT to confidence intervals
+========================================================
+  
+  
+* As we saw, the sample mean of IID variables approaches a standard normal distribution:
+  
+  $$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$$
+  
+* And we know that for a standard normal distribution,  ~ 95% of the density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
+  
+* So the probability that $\bar X$ lies between $\mu + 2 \sigma / \sqrt{n}$ and $\mu - 2 \sigma / \sqrt{n}$ is ~ 95%.
+* Therefore, $\bar X \pm 2 \sigma /\sqrt{n}$ is an approx. 95% interval for $\mu$.
+
+* In the same way, $\bar X \pm 3 \sigma /\sqrt{n}$ is an approx. 99% interval for $\mu$.
+
+
+Confidence intervals: the mechanics
+========================================================
+  
+  
+* Say we want a 90% confidence interval for the mean of some distribution
+* then the upper 5% and the lower 5% of the distribution are not contained in the CI
+* the upper 5% is everything _above the .95 quantile_, which is $1.645$ for a standard normal
+* the lower 5% is everything _below the 0.05 quantile_, which is $-1.645$ for a standard normal
+* therefore 90% of the density lies between $-1.645$ and $1.645$, in standard normal units
+* converting back to the original units, we have that 90% of the density lies between
+$\bar X \pm 1.645 \sigma /\sqrt{n}$
+  
+  
+  What a confidence interval is NOT
+========================================================
+  
+  
+* Constructing a 95% confidence interval around an average does __not__ mean that the true mean is contained in the interval with 95% probability!
+* This kind of statement is only possible with __credible intervals__ in Bayesian methodology
+* In frequentist statistics, all assertions have to be seen as assertions __in the long run__:
+* 95 % confidence is a confidence that __in the long run__, 95 % of the CIs will include the population mean. It is a confidence in the algorithm and not a statement about a single CI.
+* In other words: Confidence intervals are a statement about the percentage of confidence intervals that contain the true parameter value.
+* Even this statement is only true __if the mean observed in the sample happened to be the true mean__! In general, in the long run, a 95% CI has an 83.4% probability of capturing the true mean (Cumming & Maillardet, 2006).
+
+Confidence intervals vs. prediction intervals
+========================================================
+  
+* Even though 95% of future confidence intervals will contain the true parameter, a 95%
+  confidence interval will not contain 95% of future individual observations
+* For prediction of individual observations, we need __prediction intervals__
+* These are always much wider than confidence intervals
+* The reason is that future individual observations vary much more than future means
+
+
+Exploring the confidence interval
+========================================================
+  
+  http://rpsychologist.com/d3/CI/
+  
+  
+Calculation of CIs: Confidence interval for a normal distribution
+========================================================
+  
+  
+```{r}
+x <- rnorm(1000, mean = 100, sd = 10)
+# a 95% confidence interval; qnorm(0.975) = 1.96
+mean(x) + c(-1, 1) * qnorm(0.975) * sd(x)/sqrt(length(x))
+# a 90% confidence interval; qnorm(0.95) = 1.64
+mean(x) + c(-1, 1) * qnorm(0.95) * sd(x)/sqrt(length(x))
+```
+
+
+
+Calculation of CIs: Confidence interval for a proportion
+========================================================
+class:small-code  
+  
+* Let's imagine we've asked 100 people if they prefer apples or oranges, and 61 said they preferred oranges, yielding a preference ratio of .61. What is a 95% confidence interval for the "true proportion"?
+* Preference is binary, so the sum of preferences is a binomial distribution with true mean $p$ and true variance $p(1-p)$
+* theoretical CI:
+  $$\hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{p(1 - p)}{n}}$$
+* Wald CI (replacing $p$, the true parameter we don't know, by $\hat p$, the parameter estimated from the sample):
+             $$\hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{\hat p(1 - \hat p)}{n}}$$
+             
+```{r}
+p_hat <- 0.61
+n <- 100
+# a 95% confidence interval
+p_hat + c(-1, 1) * qnorm(0.975) * sqrt((p_hat * (1-p_hat))/n)
+# alternatively, use binom.test for an exact test
+binom.test(61,100)$conf.int
+```
+
+             
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>Hypothesis testing</h1>
+
+
+Hypothesis testing: the setting
+========================================================
+
+* In classical hypothesis testing, the task is to decide between two alternatives:
+    + the null hypothesis $H_0$: the default we're assuming (just in order to reject it)
+    + the alternative hypothesis $H_1$: the thing we really would like to show to be correct, the thing we're collecting evidence for
+* We can __never__ prove that $H_0$ is false, or that $H_1$ is true. We can only hope to assemble a lot of evidence in favor of $H_1$.
+* If we're successful, we say that under the assumption $H_0$ is true, the data we've collected is _(very) surprising_
+* Consequently, we say we're _rejecting_ $H_0$.
+
+
+Hypothesis testing: examples
+========================================================
+
+* $H_0$: The average temperature in Munich in January is 5 degrees Celsius; $H_1$: The average temperature in Munich in January is _not_ 5 degrees Celsius ($H_1$ undirected)
+* $H_0$: Men and women are equally good at learning languages; $H_1$: Women are better than men at learning languages ($H_1$ directed)
+* $H_0$: Marathon finisher times are independent of whether it rained during the race or not; $H_1$: There is a difference in marathon finisher times conditional on whether it was raining or not ($H_1$ undirected)
+
+Hypothesis testing: the logic (1)
+========================================================
+
+* How likely is the observed data, assuming $H_0$ is true?
+* Example:
+    + We know that in the population overall, performance on test T equals 30.
+    + For a special group of 64 participants (politicians, say) we obtain an average score of 27, with a standard deviation of 6.
+    + How likely is it that the politicians are not a sample of the population overall?
+    
+*  Using the CLT, the sample mean is approximately normally distributed, with a mean of $30$ and a standard error of $6/\sqrt{81} = 0.75$:
+$$\bar X \sim N(30, 0.75)$$  
+* Now, for our sample mean to be real surprising, given the distribution it is said to come from, we want it to lie in either the _very_ lower or the _very_ upper part of this hypothetical distribution. 
+
+Hypothesis testing: the logic (2)
+========================================================
+
+* Let's quickly peek at how it looks in our example:
+
+```{r, warning=FALSE, message=FALSE}
+x <- seq(25,35, 0.1)
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dnorm, args = list(mean = 30, sd =0.75)) + 
+  geom_vline(xintercept = 27, color = 'red') + ggtitle('Likelihood of sample mean (in red) if H0 is true')
+```
+
+
+Hypothesis testing: the logic (3)
+========================================================
+
+* Let's say we decide that we will find the data surprising if it lies in the lower 2.5% or the upper 2.5% of the distribution. In that case, if we decide to reject $H_0$, we run a 5% risk of having made a mistake.
+* This risk is the _Type 1 error_, the risk to mistakenly reject $H_0$. It is given by $\alpha$, the Type 1 error rate.
+* To find the boundaries, we use the standard normal quantiles corresponding to a 5% error rate (or a 95% confidence interval, correspondingly): -1.96 and 1.96.
+* So, we reject $H_0$ if either
+    + $\bar X > 30 + 1.96*0.75 = 31.47$, or
+    + $\bar X < 30 - 1.96*0.75 = 28.53$
+* With the mean of $27$ we obtained from our sample, we thus reject $H_0$ at $alpha = 0.05$
+* Had we chosen $alpha = 0.01$ instead, we would also have rejected $H_0$, because
+    + $\bar X = 27 < 30 - 2.58*0.75 = 28.07$
+
+
+Hypothesis testing: commonly used Metrics
+========================================================
+
+
+action/truth                | $\mathbf{H_0}$ is true   | $\mathbf{H_1}$ is true   | total
+-------------               | -------------            | -------------            | ---
+__$\mathbf{H_1}$ accepted__ | $V$                      | $S$                      | $R$
+__$\mathbf{H_1}$ rejected__ | $U$                      | $T$                      | $n - R$
+__total__                   | $n_0$                    | $n - n_0$                | $n$
+
+
+(after: http://en.wikipedia.org/wiki/Familywise_error_rate)
+
+* False Positive / __Type 1 error__: $V$
+* False Negative / __Type 2 error__: $T$
+* False Discovery Rate (__FDR__): $\frac{V}{R}$
+* False Positive Rate (__FPR__): $\frac{V}{n_0}$
+* Family Wise Error Rate (__FWER__): $Pr(V >= 1)$ (at least one false positive)
+* Positive Predictive Value (__PPV__): 1 - FDR = $\frac{S}{R}$
+
+&nbsp;
+
+Related metrics (used in e.g. retrieval, pattern recognition, data science)
+========================================================
+
+action/truth                | $\mathbf{H_0}$ is true   | $\mathbf{H_1}$ is true   | total
+-------------               | -------------            | -------------            | ---
+__$\mathbf{H_1}$ accepted__ | $V$                      | $S$                      | $R$
+__$\mathbf{H_1}$ rejected__ | $U$                      | $T$                      | $n - R$
+__total__                   | $n_0$                    | $n - n_0$                | $n$
+
+
+* __Sensitivity__ / Recall / True Positive Rate: proportion of correctly detected positives, $\frac{S}{n - n_0}$
+* __Specificity__ / True Negative Rate: proportion of negatives correctly identified as such, $\frac{U}{n_0}$
+* __Precision__: proportion of accepted instances that are correct, $\frac{S}{R}$ (= Positive Predictive Value)
+* __Accuracy__: proportion classified correctly, $\frac{S + U}{n}$
+* see also: https://en.wikipedia.org/wiki/Precision_and_recall
+
+&nbsp;
+
+Hypothesis testing demo
+========================================================
+
+* http://shinyapps.org/apps/PPV/ 
+* observe how  
+    + the percentage of actually true hypotheses, 
+    + the chosen alpha, and
+    + the power of the test
+interact in producing each of $U,V,S,T$
+
+             
+             
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>Hypothesis testing: the t distribution</h1>
+
+
+The t distribution
+========================================================
+
+* With small sample sizes, for normally distributed data, instead of the normal distribution, the $t$ distribution is used to construct confidence intervals and perform hypothesis testing.
+* Instead of by a mean and a standard deviation, the $t$ distribution is parameterized by the _degrees of freedom_.
+* Compared with a normal, the $t$ distribution has thicker tails than the normal. 
+* The more degrees of freedom, the more like a normal the $t$ distribution gets.
+* Compare the $t$ distribution with the standard normal:
+    + standard normal: $\frac{\bar X - \mu}{\sigma/\sqrt{n}}$
+    + $t$, with $n-1$ degrees of freedom: $\frac{\bar X - \mu}{S/\sqrt{n}}$ (uses sample standard deviation instead of the standard deviation of the population)
+    
+    
+Comparing the normal and the t distribution
+========================================================
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'red', mean=0, sd=1)
+p <- ggdistribution(dt, seq(-4, 4, 0.1), colour = 'green', p = p, df = 1)
+p <- ggdistribution(dt, seq(-4, 4, 0.1), colour = 'blue', p = p, df = 10)
+ggdistribution(dt, seq(-4, 4, 0.1), colour = 'cyan', p = p, df = 20)
+```
+
+    
+The t confidence interval
+========================================================
+
+* The $t$ confidence interval is constructed analogously to that of the normal distribution ($\bar X \pm Z_{1-\alpha/2}   \sigma/\sqrt{n}$), namely
+
+$$\bar X \pm t_{n-1} S/\sqrt{n}$$
+* where  $t_{n-1}$ is the relevant quantile from the *t* distribution with $n-1$ degrees of freedom.
+
+
+```{r}
+m <- 1000
+sd <- 25
+n <- 9
+(confint <- m +c(-1,1) * sd/sqrt(n) * qt(0.975,n-1))
+```
+
+t test
+========================================================
+
+* The $t$ test is commonly used to compare normally distributed data from two groups, or to compare a sample mean against a hypothetical mean
+* Let's generate some sample data and compare the obtained mean against a hypothesized theoretical mean.
+* We perform a two-sided test because our hypotheses are:
+    + $H_0$: the mean in this sample is equal to the population mean, $\mu = 1000$
+    + $H_1$: the mean in this sample is different from the population mean
+* We choose an alpha of 0.05, or equivalently, a confidence level of 0.95
+
+```{r}
+population_mean <- 1000; simulation_mean <- 1002
+sd <- 2; n <- 9
+data <- rnorm(n, mean = simulation_mean, sd = sd)
+t.test(data, alternative = 'two.sided', mu = population_mean, conf.level = 0.95)
+```
+
+
+
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>p-values</h1>
+
+
+The meaning of p (1)
+========================================================
+
+* Hypothesis testing, p-values, and confidence intervals are all related.
+* Looking at the output of a $t$ test ...
+
+```{r}
+set.seed(1024)
+population_mean <- 1000
+simulation_mean <- 1002
+sd <- 2
+n <- 9
+data <- rnorm(n, mean = simulation_mean, sd = sd)
+t.test(data, alternative = 'two.sided', mu = population_mean, conf.level = 0.95)
+```
+
+The meaning of p (2)
+========================================================
+
+
+* We have that:
+    + under $H_0$, when $\mu$ = 1000, the sample mean obtained corresponds to a $t$ value of $t$ = 1.4002
+    + the respective _p-value_ is the probability, under $H_0$, of obtaining a $t$ value as extreme or more extreme than that
+* As we did a two-sided test, this means that the probability of obtaining a $t \ge$ 1.4002 or a $t \le$ -1.4002 is 0.199, under the assumption the true mean is 1000
+* As this p-value is greater than 0.05, we cannot reject $H_0$
+
+
+P-values: relationship to confidence intervals
+========================================================
+
+* If an effect is statistically different from the value assumed under $H_0$ in a two-sided $t$-test with an alpha of .05 (p = .05), the 95% confidence interval will not include that value.
+* In our example, we have that the 95% confidence interval ranges from 999.18 to 1003.34 and thus, includes 1000.
+
+
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>Power</h1>
+
+
+What is power?
+========================================================
+
+* Power is the probability of rejecting the null hypothesis when it is false
+* Power = 1 - type 2 error = $1 - \beta$
+
+
+\[power = P\left(\frac{\bar X - \mu_0}{s /\sqrt{n}} > t_{1-\alpha,n-1} ~;~ \mu = \mu_a \right)\]
+
+
+Power increases with
+
+* difference between $\mu_0$ and $\mu_a$ (in the case of comparing two groups)
+* the chosen alpha level
+* the sample size 
+
+
+Power decreases with
+
+* the standard deviation
+
+
+Power calculation
+========================================================
+
+* In R, the _power.t.test_ function calculates the power of a test, given the (assumed) true difference in means, the number of observations per group, the standard deviation, and the type 1 error rate (alpha):
+
+```{r}
+power.t.test(n = 11, delta = 1.2, sd = 0.75, sig.level = 0.05)
+```
+
+* This means that if the true difference in means were 1.2, and the standard deviation happens to be 0.75, and we have 11 people in both groups, and we test at an alpha level of .05, we have a 95% probability of getting a significant result for that effect.
+
+
+Demo: Influence the power
+========================================================
+
+Inspecting the effect of varying $\mu_1$, $sd$, $N$, and $alpha$
+
+
+
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>Effect size</h1>
+
+Effect size
+========================================================
+
+* Two of the factors influencing power, the true difference of means and the standard deviation, combine to form the _effect size_, which is the standardized true difference:
+
+\[effect size = \frac{\mu_1 - \mu_0}{\sigma}\]
+
+* So, the bigger the effect size, the more likely we are to detect the difference, _given that there is one_
+
+
+Measures of effect size
+========================================================
+
+* There are two families of measures:
+    + g-family: e.g., Cohen's $d$
+    + r-family: e.g., $r$ (the correlation coefficient)
+
+Cohen's d
+========================================================
+
+* Cohen's $d$ is the difference of means, in units of standard deviation:
+$$d = \frac{m_1 - m_2}{SD_{pooled}}$$ 
+* if not reported, Cohen's d may be calculated from the $t$ statistic:
+
+$$t = \frac{m_1 - m_2}{SD_{pooled} * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
+$$d = t * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
+
+r and R^2
+========================================================
+
+* $r$ is the correlation coefficient, the (sample) covariance divided by the product of the (sample) standard deviations:
+$$r = \frac{\sum_i{(x_i - \bar x)(y_i - \bar y)}}{s_x s_y}$$
+
+* $R^2$, the coefficient of determination, indicates how much of the variation in the dependent variable is explained by the  independent variable:
+$$R^2 = 1 - \frac{SS_{res}}{SS_{total}}$$
+
+
+Demo: Cohen's d
+========================================================
+
+http://rpsychologist.com/d3/cohend/
+
+
+
+
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>Multiple comparisons</h1>
+
+
+What if we do several tests at once?
+========================================================
+
+* If you perform multiple hypothesis tests, the chance of a type 1 error increases
+* Say you perform 20 tests, with alpha = .05: then the chance of _not_ committing a type 1 error is $.95^2 = 0.35$!
+* There are several methods of controlling the overall error rate, e.g.
+    + Bonferroni correction
+        + controls the family-wise error rate (FWER) at level alpha
+        + dividing alpha by the total number of tests performed
+        + may be too conservative
+    + Benjamini-Hochberg
+        + controls the false discovery rate at level alpha
+        + calculates the p-values as usual, then orders them from smallest to largest, $p_1, p_2,...p_m$.
+        + now, any result with $p_i <= \frac{(alpha*i)}{m}$ is declared significant
+
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>The Bayesian Way</h1>
+
+
+Reverend Thomas Bayes... not.
+========================================================
+
+```{r, echo = FALSE, out.width = "350px"}
+knitr::include_graphics("skatingminister.jpg")
+```
+
+Uncertainty
+========================================================
+
+* in frequentist statistics, the true parameters are fixed, and the data is random
+* in Bayesian statistics, the data is given; what's uncertain are the parameters
+* in other words, parameters like means or standard deviations are modeled as random variables
+* they have a _prior_ (before looking at the data) and a _posterior_ distribution (combining prior and data according to Bayes' theorem)
+* the prior information and the data are combined using Bayes Theorem:
+
+$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+
+* the different items being
+    + the prior probability of the hypothesis/parameter \(P(A)\)
+    + the likelihood of the data, given the hypothesis/parameter \(P(B|A)\)
+    + the evidence \(P(B)\) = the likelihood of the data, integrated over all hypotheses/parameter values
+    + the posterior probability of the hypothesis/parameter, given the data \(P(A|B)\)
+
+
+Bayesian updating (1)
+========================================================
+
+* from Bayes theorem follows the idea of _Bayesian updating_
+* Let's do an example.
+
+Bayesian updating (2)
+========================================================
+
+We want to estimate the bias of a curious-looking coin we've never seen before, and we're skepticists, so we assume no value is more probable a priori than another. So, we choose a uniform distribution for our prior:
+
+```{r, warning=FALSE, message=FALSE}
+x <- seq(0,1,0.001)
+# using a beta(1,1) distribution for the prior
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,1))
+```
+
+That is, before ever seeing any data, we assume that every bias is equally likely.
+
+Bayesian updating (3)
+========================================================
+
+&nbsp;
+
+Now, we throw the coin once and obtain a tail. We now update our prior assumption to take into account the data, using Bayes theorem. 
+
+&nbsp;
+
+In our conveniently chosen example, we don't have to compute integrals - we make use of a concept called _conjugacy_, which means that if we choose a prior distribution that is _conjugate_ to the distribution of the likelihood, we obtain a new instance of the type of the prior distribution.
+
+Bayesian updating (4)
+========================================================
+
+For our example of coin flips, the conjugate distributions are the beta and the binomial, and combining the beta prior with the binomial likelihood of coin flips we obtain a beta distribution again:
+
+```{r}
+x <- seq(0,1,0.001)
+# having flipped the coin once and seen a tail, we now have a beta(1,2) distribution for the posterior
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,2))
+```
+
+Bayesian updating (5)
+========================================================
+
+
+As we see from the plot, now that we've seen one tail we can be sure of one thing: The coin cannot have two heads.
+
+Bayesian updating (6)
+========================================================
+
+We flip again, and obtain another tail.
+
+```{r}
+x <- seq(0,1,0.001)
+# tail again - posterior is now beta(1,3) 
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,3))
+```
+
+Bayesian updating (7)
+========================================================
+
+
+Now, we get a head, and can rule out that there's just two tails:
+
+```{r}
+x <- seq(0,1,0.001)
+# tail again - posterior is now beta(2,3) 
+ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(2,3))
+```
+
+Bayesian updating (8)
+========================================================
+
+Let's throw some more, and look at how our belief develops:
+
+
+```{r}
+x <- seq(0,1,0.001)
+throws <- c(1,0,0,1,1,1,1,0,1,0,1,1,0,1,0,1) # the results obtained (first item is from the prior)
+successes <- cumsum(throws)
+ns <- seq(1:16) # number of throws 
+plots <- Map(function(s,n) {
+  ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(s,n))},
+  successes,
+  ns)
+do.call('grid.arrange', plots)
+```
+
+
+Bayesian updating (9)
+========================================================
+
+
+As we see, our belief gets more dense in the middle part of the distribution, but we're still pretty unsure about the true bias.
+
+
+
+Computation and Markov Chain Monte Carlo
+========================================================
+
+* Until recently, using Bayesian models was severely restricted due to computational problems:
+    + if not using conjugate distributions, exactly computing the integral in the denominator may be unfeasible
+    + on the other hand, a model should be chosen for adequacy, not for computational feasibility
+    + solution: Markov Chain Monte Carlo
+    
+* Markov Chain Monte Carlo    
+    + draw samples from an unknown [posterior] distribution
+    + prominent algorithms: Metropolis-Hastings, Gibbs sampling, Hamiltonian Monte Carlo
+    + example: Metropolis-Hastings in R
+    
+    
+Example: King Markov (1)
+========================================================
+    
+```{r}
+# King Markov example from McElreath's Statistical Rethinking
+# In the long run, each island will be visited according to its population size
+num_weeks <- 1e5 # number of weeks to plan
+positions <- rep(0,num_weeks) # where the King was at
+# islands are ordered from 1 to 10, according to their population size
+# numbers are proportions: island 2 has twice as big a population as island 1, island 3 has 3x as big a population, etc.
+current <- 1 # current island
+for ( i in 1:num_weeks ) {
+    # record current position
+    positions[i] <- current
+
+    # flip coin to generate proposal to go left or right
+    proposal <- current + sample( c(-1,1) , size=1 )
+    # now make sure he loops around the archipelago
+    if ( proposal < 1 ) proposal <- 10
+    if ( proposal > 10 ) proposal <- 1
+
+    # move?
+    prob_move <- proposal/current
+    # if proposal > current: move
+    # if proposal < current: flip a coin and move or stay accordingly
+    current <- ifelse( runif(1) < prob_move , proposal , current )
+}
+```
+
+Example: King Markov (2)
+========================================================
+
+Where the King ended up during the first 100 days:
+
+```{r}
+ggplot(data_frame(x = 1:100, y = positions[1:100]), aes(x,y)) + geom_point()
+```
+
+
+
+Communicating uncertainty (1)
+========================================================
+
+
+* Having obtained a posterior distribution for the unknown parameter, we now want to predict new data
+* We do this by generating data from the posterior distribution we obtained
+* this is radically different from using just the most probable posterior value for prediction!
+* instead, we average over the predictions from the different parameter values, weighting every prediction by the probability of that parameter value
+* this is called the _posterior predictive_ distribution
+* this way, the uncertainty about the parameter is preserved and communicated in the prediction
+
+Communicating uncertainty (2)
+========================================================
+
+
+Let's go through this. Assume that we've computed a posterior distribution over a grid of values...
+
+```{r}
+# compute the posterior on a grid of values ranging from 0 to 1
+p_grid <- seq(0,1, length.out = 1000)
+# uniform prior
+prior <- rep(1,1000)
+# assume our data is 5 successes out of 13 
+# how likely is it to get 5 successes out of 13 with each of the probabilities in the grid?
+likelihood <- dbinom(5,13, prob=p_grid)
+posterior <- prior * likelihood
+# normalized
+posterior <- posterior / sum(posterior)
+```
+
+Communicating uncertainty (3)
+========================================================
+
+
+... we can now sample from the posterior. Each value of the grid is included with a probability that is its posterior:
+
+```{r}
+samples <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+```
+
+This is how the samples look like:
+
+```{r}
+ggplot(data_frame(x = samples), aes(x)) + geom_density()
+```
+
+
+Communicating uncertainty (4)
+========================================================
+
+
+Now let's compare two kinds of predictions:
+
+* simulating observations exclusively from the MAP (maximum aposteriori, the most probable value of the posterior distribution)
+* simulating observations from the entire posterior distribution
+
+
+Communicating uncertainty (5)
+========================================================
+
+
+
+```{r}
+map <- p_grid[which.max(posterior)]
+pred1 <- rbinom(1e4, size = 13, prob = map)
+pred2 <- rbinom(1e4, size = 13, prob = samples)
+ggplot(data_frame(pred1 = pred1, pred2 = pred2), aes(x = pred1)) + 
+  geom_histogram(bins = 13, fill = 'red', color = 'red', alpha = .2) + 
+  geom_histogram(aes(x = pred2), bins = 13, fill = 'yellow', alpha = .2, color = 'yellow') +
+  xlab("predicted values")
+```
+
+
+
+Communicating uncertainty (6)
+========================================================
+
+
+As we see, the predictions from the entire distribution are more spread out, thus better conveying the uncertainty.
+
+
+Read on
+========================================================
+
+As we don't have the time to cover more of Bayesian statistics, here are my recommendations:
+
+* Statistical Rethinking, by Richard McElreath. Great for understanding the concepts, what really matters, and why it matters
+* Doing Bayesian Data Analysis, by John Kruschke. 
+* Bayesian Data Analysis, by Andew Gelman. Advanced stuff.
+
+
+
+
+========================================================
+type:prompt
+             
+&nbsp; 
+             
+&nbsp; 
+             
+<h1>Linear regression</h1>
+
+Why linear regression?
+========================================================
+
+* Interpretability
+* Parsimony / Occam's razor
+* great example for explaining general concepts in machine learning / data science
+
+
+
+Brain weight and body weight: can we predict one from the other? 
+========================================================
+
+We'll use the "mammals" dataset: average brain and body weights for 62 species of land mammals
+
+```{r}
+library(MASS)
+data("mammals")
+head(mammals)
+summary(mammals)
+```
+
+
+Correlation
+========================================================
+
+
+We check out the correlation coefficient...
+
+```{r}
+cor(mammals)
+```
+
+... and, very pleased to see such a high number, immediately start with the regression... or should we?
+
+
+Visualize - first!
+========================================================
+
+Let's first _look_ at the data:
+
+```{r}
+ggplot(mammals, aes(body, brain)) + geom_point()
+```
+
+
+Outliers...
+========================================================
+
+&nbsp;
+
+In linear regression, we will fit a line through the data points. Imagine the point in the upper right was not there.
+Would we still fit the same line? No.
+
+&nbsp;
+
+With datasets like this one, you are forced to think about how to handle points like this - points that highly influence the resulting fit. However, in this introductory course, we don't have time to discuss this.
+Instead, we focus on the mechanics of simple (one-predictor) linear regression. However, you've been warned ;-)
+
+An optimization problem: Least Squares
+========================================================
+
+* Finding the best way of predicting brain weight from body weight is an optimization problem
+* We will choose a _cost function_ (or _loss function_) and seek to minimize its value
+* the loss function chosen in regression (and many other algorithms) is _Least Squares_
+* We want to minimise the sum of the squared deviations of the predictions from the target:
+
+$$\sum_{i=1}^n (y_i - \hat y_i)^2$$
+
+
+Mean only regression (1)
+========================================================
+
+* Imagine if we had just one value to pick in our prediction.
+* Then the value that would minimise the cost would be the mean of y, $\bar y$:
+
+```{r}
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_hline(yintercept = mean(mammals$brain), color = 'red' )
+```
+
+
+Mean only regression (2)
+========================================================
+
+* The sum of squared errors would be
+
+```{r, message=FALSE}
+library(dplyr)
+(mammals$brain - mean(mammals$brain))^2 %>% sum()
+```
+
+
+Fitting a line
+========================================================
+
+* In linear regression, instead of predicting the same point for every value, we want to fit a line through the the data so we can predict $y$ (brain weight) from $x$ (body weight):
+
+$$y = \beta_0 + \beta_1 x$$
+
+
+* However, there is an infinite number of lines we could fit here...
+
+```{r}
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_abline(intercept = 40, slope = 0.9, color = 'blue') + 
+  geom_abline(intercept = 100, slope = 0.95, color = 'green') +
+  geom_abline(intercept = 100, slope = 0.8, color = 'red') +
+  geom_abline(intercept = 140, slope = 0.85, color = 'cyan') 
+```
+
+
+How do we find the best line?
+========================================================
+
+* Again, we use the _Least Squares_: we want to minimize
+$$\sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_i))^2$$
+
+* Solving this yields
+
+$$\hat \beta_1 = Cor(y, x) \frac{sd(y)}{sd(x)} , \hat \beta_0 = \bar y - \hat \beta_1 \bar x$$
+
+
+Linear models: lm()
+========================================================
+
+In R, we use lm() to do the calculations for us:
+
+```{r}
+fit <- lm("brain ~ body", data = mammals)
+fit
+```
+
+This tells us that with every additional kg of body mass, brain mass increases by about 1g.
+
+
+Linear models: plotting
+========================================================
+
+
+We can plot the best fit:
+
+```{r}
+intercept <- fit$coefficients[1]
+slope <- fit$coefficients[2]
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_abline(intercept = intercept, slope = slope, color = 'cyan') 
+```
+
+
+
+Linear models: Diagnostics (1)
+========================================================
+
+
+Let's compare the sum of squared errors with the value we obtained before, when just predicting the mean for every data point:
+
+```{r}
+
+(mammals$brain - (intercept + slope * mammals$body))^2 %>% sum()
+```
+
+As we see, we have reduced the sum of squared errors quite a bit.
+
+
+Linear models: Diagnostics (2)
+========================================================
+
+
+We get diagnostic  and goodness of fit information using summary():
+
+```{r}
+summary(fit)
+```
+
+Goodness of fit
+========================================================
+class:small-code
+
+
+* Regressing on a predictor can be seen as explaining away part of the uncertainty.
+* $R^2$ is a measure of which proportion of the variance was explained by the regression
+* Compare the original variation in the data with the variation left over after regressing on body weight: 
+
+```{r}
+model1 <- lm(brain ~ 1, data = mammals)
+model2 <- lm(brain ~ body, data = mammals)
+residuals <- c(resid(model1), resid(model2))
+model = factor(c(rep("intercept only", nrow(mammals)),
+               rep("intercept and slope", nrow(mammals))))
+g = ggplot(data_frame(e = residuals, fit = model), aes(y = residuals, x = model, color = fit, fill = fit))
+g = g + geom_dotplot(binaxis = "y", dotsize = 15, stackdir = "center", binwidth = 7)
+g = g + xlab("Model")
+g = g + ylab("Residual")
+g
+```
+
+
+
+Predictions (1)
+========================================================
+class:small-code
+
+
+* With the formula we obtained, we can now predict new values (shown in red):
+
+```{r}
+body_new <- c(20, 100, 200, 1000, 2000)
+brain_new <- predict(fit, newdata = data_frame(body = body_new))
+ggplot(mammals, aes(body, brain)) + geom_point() + 
+  geom_point(data = data_frame(body = body_new, brain = brain_new), color = 'red', size = 3) + 
+  geom_abline(intercept = intercept, slope = slope, color = 'cyan') 
+```
+
+
+Predictions (2)
+========================================================
+
+
+* However, let's not forget about uncertainty:
+    + the parameter estimations are uncertain (uncertainty of the estimation)
+    + the predictions are even more uncertain (as $y$ is not a 100% determined by $x$)
+
+Confidence intervals vs. prediction intervals
+========================================================
+class:small-code
+
+* Here are the predictions again, with both types of uncertainty displayed:
+
+```{r, message=FALSE}
+fit <- lm("brain ~ body", data = mammals)
+body_new = seq(min(mammals$body), max(mammals$body), length = 100)
+brain_new_p1 <- as.data.frame(predict(fit, newdata = data_frame(body = body_new), interval = ("confidence")))
+brain_new_p1 <- brain_new_p1 %>% mutate(x = body_new)
+brain_new_p2 <- as.data.frame(predict(fit, newdata = data_frame(body = body_new), interval = ("prediction")))
+brain_new_p2 <- brain_new_p2 %>% mutate(x = body_new)
+g1 <- ggplot(brain_new_p1, aes(x, fit)) + geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'cyan', alpha = 0.2) + geom_abline(intercept = fit$coefficients[1], slope = fit$coefficients[2], color = 'cyan', size = 1) + 
+  ggtitle('Point predictions, with confidence intervals')
+g2 <- ggplot(brain_new_p2, aes(x, fit)) + geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'cyan', alpha = 0.2) + geom_abline(intercept = fit$coefficients[1], slope = fit$coefficients[2], color = 'cyan', size = 1) +
+  ggtitle('Point predictions, with prediction intervals')
+grid.arrange(g1, g2, ncol=2)
+```
+
+
+One last thing ... ALWAYS plot the data
+========================================================
+
+* The "anscombe" dataset contains 8 variables, $x1$ - $x4$ and $y1$ - $y4$. If we regress every y variable on its corresponding x variable, we get 4 nice regressions with an $R^2$ of ~ 0.66:
+
+```{r}
+data("anscombe")
+summary(lm(y1 ~ x1, data = anscombe))$r.squared
+summary(lm(y2 ~ x2, data = anscombe))$r.squared
+summary(lm(y3 ~ x3, data = anscombe))$r.squared
+summary(lm(y4 ~ x4, data = anscombe))$r.squared
+```
+
+
+
+Well.
+========================================================
+
+So do we have 4 instances of nicely explained variables? How does the data actually _look_?
+
+```{r, echo=FALSE}
+ff <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  mods[[i]] <- lmi <- lm(ff, data = anscombe)
+}
+
+op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13))
+  abline(mods[[i]], col = "blue")
+}
+mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
+par(op)
+```
+
+
+What's next?
+========================================================
+
+* these are just the basics of (one-variable) linear regression...
+* for example, $R^2$ has its flaws as a goodness-of-fit measure...
+* and, as we saw, outliers can be a problem we have to deal with...
+* and, we will normally have more than one possible predictor...
+* and, we will often not restrict ourselves to linear relationships...
+* ... for the sequel on linear regression, see you in one of our data science classes!
+
+            
+     
