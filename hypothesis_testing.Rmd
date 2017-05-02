@@ -28,7 +28,7 @@ output: html_document
     + For a special group of 64 participants (politicians, say) we obtain an average score of 27, with a standard deviation of 6.
     + How likely is it that the politicians are not a sample of the population overall?
     
-*  Using the CLT, the sample mean is approximately normally distributed, with a mean of $30$ and a standard error of $6/\sqrt{81} = 0.75$:
+*  Using the CLT, the sample mean is approximately normally distributed, with a mean of $30$ and a standard error of $6/\sqrt{64} = 0.75$:
 $$\bar X \sim N(30, 0.75)$$  
 * Now, for our sample mean to be real surprising, given the distribution it is said to come from, we want it to lie in either the _very_ lower or the _very_ upper part of this hypothetical distribution. 
 * Let's quickly peek at how it looks in our example:

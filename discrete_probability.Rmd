@@ -165,6 +165,6 @@ dpois(0, lambda=12)
 * What is the probability that fewer than 40 cars arrive during these 10 minutes? 
 
 ```{r}
-ppois(80, lambda=12*10)
+ppois(40, lambda=12*10)
 ```
 

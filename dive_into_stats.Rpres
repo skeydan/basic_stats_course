@@ -28,7 +28,12 @@ date: 2/1/2017
 width: 1440
 incremental:false 
 
-
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(ggfortify)
+```
 
 ========================================================
 type:prompt
@@ -61,7 +66,7 @@ Frequentist inference
 * e.g.: control number of errors _in the long run_
 * instruments of classical (Fisherian) frequentist statistics lack intuitive meaning:
     + confidence intervals
-    + p-values
+    + p-values 
     + hypothesis testing
 * until recently, _the_ way to do statistical inference
 
@@ -111,10 +116,24 @@ type:prompt
 <h1>Probability</h1>
 
 
+Probability - your take
+========================================================
+incremental:true
+
+&nbsp;
+
+- What do _you_ think probability is?
+- Say the probability it will rain tomorrow is 80%. The probability it will _not_ rain is?
+- The probability that you work late tomorrow is 25%. What is the probability that either you'll work late, or it rains, or both?
+- What is the probability that you'll work late AND it will rain tomorrow?
+
+
 
 
 Fundamental axioms of probability (Kolmogorov)
 ========================================================
+
+&nbsp;
 
 1. The probability of any event is a positive real number.
 2. The probability that _some_ event will occur is 1.
@@ -126,14 +145,18 @@ Fundamental axioms of probability (Kolmogorov)
 Probability of event A or event B happening: \(P(A\cup B)\)
 ========================================================
 
+&nbsp;
+
 * Disjoint events (see axiom 3 above): $$P(A\cup B)=P(A)+P(B)$$
 * Non-disjoint events: $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
 
-&nbsp;
+
 
 
 Probability of event A and event B happening: \(P(A\cap B)\)
 ========================================================
+
+&nbsp;
 
 * General formulation:
 
@@ -148,6 +171,8 @@ $$P(A \cap B) = P(A | B) * P(B) = P(B | A) * P(A) = P(A) * P(B)$$
 
 Independent events
 ========================================================
+
+&nbsp;
 
 * Events are _independent_ if
 
@@ -164,10 +189,26 @@ type:prompt
 <h1>Conditional Probability</h1>
 
 
-Conditional Probability: Definition
+Conditional probability: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+- How likely are you to do [fill in favorite sports here] next Sunday?
+- How likely are you to do [fill in favorite sports here] next Sunday, given it rains?
+- Now say you've taken the "pick-the-genius" test in order to find out if ... well ... you're a genius.
+- The test result is either 0 or 1, where 1 means you're totally a genius, and 0 means ... 
+- If someone's really a genius, the test will report this with a probability of 0.92. If someone's not a genius, the test will say so with probability 0.99.
+- Your score on the genius test is 1! Now, are you a genius? 
+- Some more info. In the population, every 1000th person is a genius. Now, are you a genius?
+
+
+
+Conditional probability: definition
 ========================================================
 
-### Definition
+&nbsp;
 
 * Probabilities change when _conditioning_ on additional information.
 * Probability of \(A\) given \(B\):
@@ -185,6 +226,8 @@ $$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
 Conditioning matters
 ========================================================
 
+&nbsp;
+
 * Probability of being struck by lightning vs. probability of being struck by lightning, provided you go out in the woods in a heavy thunderstorm
 * Probability of contracting rare hereditary disease XYZ vs. probability of contracting rare hereditary disease XYZ, given parents have it
 
@@ -193,17 +236,27 @@ Conditioning matters
 
 Bayes Theorem
 ========================================================
+incremental:true
+
+
+$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+
+where
 
 * Prior probability \(P(A)\)
 * Likelihood \(P(B|A)\)
 * Evidence \(P(B)\)
 * Posterior probability \(P(A|B)\)
 
-$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
-
-* Classic example: Medical test
-
 &nbsp;
+
+Let's do the genius thing again.
+
+$P(genius ~|~ test\>positive) = \frac{P(test\>positive|genius) * P(genius)}{P(test\>positive)} =  \frac{P(test\>positive|genius) * P(genius)}{P(test\>positive|genius) * P(genius) + P(test\>positive|not\>a\>genius) * P(not\>a\>genius)}$
+
+$P(genius ~|~ test\>positive) = \frac{0.92 * 0.001}{0.92 * 0.001 + (1 - 0.99) * 0.999} = 0.08$
+
+
 
 
 ========================================================
@@ -216,6 +269,23 @@ type:prompt
 <h1>Probability distributions</h1>
 
 
+Probability distributions: your take
+========================================================
+
+&nbsp;
+
+* What do you think might be depicted here?
+
+```{r, echo=FALSE}
+x <- sample(1:6, 10, replace = TRUE)
+par(mfcol = c(1,2))
+hist(x, freq = FALSE)
+plot(ecdf(x))
+```
+
+
+ 
+
 Random Variables
 ========================================================
  
@@ -226,7 +296,7 @@ Random Variables
     + continuous: can take any value on [a subset of] the real number line 
 * Examples:
     + Die rolls are discrete random variables, where every outcome between 1 and 6 is equally likely ($P(X = x) = \frac{1}{6}$)
-    + Test results are mostly regarded as continuous random variables, with an average value and a spread
+    + Height and weight are continuous random variables that might take on any real number
  
 
 Probability mass/density function (PMF/PDF)    
@@ -279,55 +349,8 @@ For every probability distribution, there are 4 functions in R:
 * p<...>: gives the cumulative probability for a quantile
 * q<...>: gives the corresponding value for a cumulative probability (quantile function)
 
-Examples...
 
-Generate random variables:
-========================================================
 
-```{r}
-# generate one random value from a uniform distribution between 0 and 1
-runif(1)
-# generate 10 random values from a uniform distribution between 0 and 1
-runif(10)
-# generate 10 random values from a uniform distribution between -10 and 10
-runif(10, min = -10, max = 10)
-```
-
-Get density:
-========================================================
-
-```{r}
-# probability density of a random value, drawn from a uniform distribution between 0 and 1
-dunif(0.1)
-# probability densities of 10 random values, drawn from a uniform distribution between 0 and 1
-dunif(seq(0, 1,.1))
-# probability densities of 10 random values, drawn from a uniform distribution between -10 and 10
-dunif(seq(0,1,.1),min = -10, max = 10)
-```
-
-Get cumulative probability:
-========================================================
-
-```{r}
-# cumulative probability of a random value, drawn from a uniform distribution between 0 and 1
-punif(0.3)
-# cumulative probability of 10 random values, drawn from a uniform distribution between 0 and 1
-punif(seq(0,1,.1))
-# cumulative probability of 10 random values, drawn from a uniform distribution between -10 and 10
-punif(seq(0,1,.1), min = -10, max = 10)
-```
-
-Get value corresponding to cumulative probability:
-========================================================
-
-```{r}
-# value corresponding to a cumulative probability, drawn from a uniform distribution between 0 and 1
-qunif(0.3)
-# values corresponding to cumulative probabilities, drawn from a uniform distribution between 0 and 1
-qunif(seq(0,1,.1))
-# cumulativeprobability of 10 random values, drawn from a uniform distribution between -10 and 10
-qunif(seq(0,1,.1), min = -10, max = 10)
-```
 
 
 ========================================================
@@ -338,6 +361,15 @@ type:prompt
 &nbsp; 
 
 <h1>Expected values</h1>
+
+
+Expected values: your take
+========================================================
+incremental:true
+
+* Say you want to describe a distribution without graphing it: how could you do that?
+* How could one represent the variation in the data?
+* Why is variation important? Do you have examples from the area you work in?
 
 
 
@@ -385,6 +417,7 @@ mean(roll_dice)
 
 Variance (1)
 ========================================================
+class:small_code
 
 The variance indicates how spread out a distribution is.
 
@@ -451,6 +484,16 @@ type:prompt
 &nbsp; 
 
 <h1>Discrete Probability Distributions</h1>
+
+
+Discrete probability distributions: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* Is the number of days it rains per year a discrete probability distribution?
+* Is the daily ratio of rain hours to non-rain hours a discrete probability distribution?
 
 
 
@@ -528,10 +571,6 @@ Binomial distribution (3)
 class:small-code
 
 ```{r, warning=FALSE, message=FALSE}
-library(ggplot2)
-library(dplyr)
-library(gridExtra)
-
 # Plot various binomial distributions
 n <- 10
 k <- seq(0,10,1)
@@ -568,7 +607,7 @@ Poisson distribution (1)
 
 
 * used to model counts
-* examples: number of add clicks per time interval, number of laptop crashes, ...
+* examples: number of add clicks per time interval, number of laptop crashes per day, ...
 * with n very large and p very small, is an accurate approximation of the binomial distribution
 * parameter(s): $\lambda$ = mean and variance of the distribution 
 
@@ -641,7 +680,7 @@ dpois(0, lambda=12)
 * What is the probability that fewer than 40 cars arrive during these 10 minutes? 
 
 ```{r}
-ppois(80, lambda=12*10)
+ppois(40, lambda=12*10)
 ```
 
 
@@ -655,7 +694,6 @@ type:prompt
 &nbsp; 
 
 <h1>Continuous Probability Distributions</h1>
-
 
 
 Uniform Distribution (1)
@@ -679,10 +717,6 @@ class:small-code
 
 
 ```{r, warning=FALSE, message=FALSE}
-library(ggplot2)
-library(dplyr)
-library(gridExtra)
-
 n <- 10
 k <- seq(0,10,0.01)
 minval = 3
@@ -710,11 +744,11 @@ $$ P(X = x; \mu, \sigma^2) = (2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}$$
 
 Normal / Gaussian Distribution (2)
 ========================================================
+class:small-code
 
 Different variances: PDFs ...
 
 ```{r, warning=FALSE, message=FALSE}
-library(ggfortify)
 p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'blue', mean=0, sd=1)
 p <- ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'green', p = p, mean=0, sd=0.5)
 ggdistribution(dnorm, seq(-4, 4, 0.1), colour = 'cyan', p = p, mean=0, sd=2)
@@ -742,6 +776,7 @@ Normal / Gaussian Distribution (4)
 Normal / Gaussian Distribution (5)
 ========================================================
 
+
 Adding up small fluctuations: example
 
 * Say you're standing on a road, together with 10 other people, and repeatedly flip a coin. If it turns up heads, you turn left, if it turns up tails, you turn right. (The other people do the same, flipping coins and turning either left or right.) Say all of you flip the coin 10 times. How will the group of you be distributed on the road?
@@ -750,7 +785,7 @@ Adding up small fluctuations: example
 
 Normal / Gaussian Distribution (6)
 ========================================================
-
+class:small-code
 
 ```{r}
 xs <- lapply(c(11,111,1111), function(x) {replicate(x, sum(sample(c(-1,1), 10, replace = TRUE)))})
@@ -770,7 +805,6 @@ If $\mu = 0, \sigma^2 =1$, we have a _standard normal_ distribution.
 
 ```{r}
 x <- seq(-4, 4, 0.1)
-#y <- dnorm(x,0,1)
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dnorm, args = list(mean = 0, sd =1))
 ```
 
@@ -781,9 +815,9 @@ Standard normal distribution (2)
 
 The standard normal is tremendously important in statistics. 
 
-* ~ 68% of the standard normal density lies between $[\bar{x} - 1 sd, \bar{x} + 1 sd]$
-* ~ 95% of the standard normal density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
-* ~ 99% of the standard normal density lies between $[\bar{x} - 3 sd, \bar{x} + 3 sd]$
+* ~ 68% of the standard normal density lie between $[\bar{x} - 1 sd, \bar{x} + 1 sd]$
+* ~ 95% of the standard normal density lie between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
+* ~ 99% of the standard normal density lie between $[\bar{x} - 3 sd, \bar{x} + 3 sd]$
 
 
 Standard normal distribution (3)
@@ -834,6 +868,20 @@ type:prompt
 <h1>Central Limit Theorem</h1>
 
 
+Central Limit Theorem: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* Imagine you roll dice with a crazy 4-sided die.
+* So it has four sides. The probability to get a 1,2,3, or 4 is 0.5,0.3,0.15, and 0.05, repectively.
+* Thus, the probability distribution is heavily skewed.
+* Now imagine you do an experiment: Roll dice 20 times in a row, and calculate the mean.
+* You do that 100 times, thus at the end you have 100 means, one for every run of the experiment.
+* How does the distribution of the means look like?
+
+
 What it's all about
 ========================================================
 
@@ -857,8 +905,6 @@ class: small-code
 * Example: Estimating the mean of roll dice
 
 ```{r, warning=FALSE, message=FALSE}
-library(ggplot2)
-library(gridExtra)
 ns = c(10, 50, 1000, 10000)
 means <- sapply(ns, function(n) {cumsum(sample(1:6, n, replace = TRUE))/(1:n)})
 plots <- Map(function(n,m) {
@@ -915,7 +961,7 @@ sample_mean_of_means
 Central Limit Theorem (4)
 ========================================================
 
-We can compare the means - and the mean of means - with the theoretical mean of the exponential(0.2) distribution, which is equal to 1 over the parameter lambda:
+We can compare the means - and the mean of means - with the theoretical mean of the exponential(0.2) distribution, which is equal to 1/lambda:
 
 ```{r}
 dist_mean <- 1/lambda
@@ -930,7 +976,6 @@ Let's look at a histogram of the 1000 means we obtained.
 Also displayed is the theoretical mean (red line) and the mean of means (black line).
 
 ```{r, warning=FALSE,message=FALSE}
-library(dplyr)
 ggplot(data_frame(m = means), aes(means)) + geom_histogram(bins = 15, color = 'cyan', fill = 'white') + 
   geom_vline(xintercept = dist_mean, color = 'red', size = 1) +  
   geom_vline(xintercept = sample_mean_of_means, color = 'black', size = 1) +
@@ -974,28 +1019,6 @@ ggplot(data_frame(c = c), aes(c)) + geom_histogram(bins = 15, color = 'cyan', fi
 
 
 
-Central Limit Theorem (9)
-========================================================
-
-We can create quantile-quantile plots to check whether the means, and the raw data, respectively, are normally distributed. First, the means: We see that theoretical quantiles and sample quantiles match very well.
-
-```{r}
-qqnorm(means)
-```
-
-
-Central Limit Theorem (10)
-========================================================
-
-This is not at all the case for the raw data.
-
-```{r}
-qqnorm(c)
-```
-
-
-
-
 
 ========================================================
 type:prompt
@@ -1006,6 +1029,21 @@ type:prompt
 
 <h1>Confidence Intervals</h1> 
   
+ 
+  
+  
+Confidence intervals: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* Imagine you have measured height and weight in a group of 20 top-class male marathon runners.
+* The average weight turned out to be 60.4 kgs.
+* What would be your guess when presented with some other top-class male marathon runner whose weight you don't know?
+* How sure are you of your guess? What factors are there that influence the amount of uncertainty?
+* What would have to happen for you to feel more confident about your guess?
+   
   
   From the CLT to confidence intervals
 ========================================================
@@ -1108,6 +1146,20 @@ type:prompt
 <h1>Hypothesis testing</h1>
 
 
+Hypothesis testing: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* Imagine your task is to build a spam filter.
+* There are two ways this could go wrong: you might classify harmless mail as spam, or you might fail to recognize spam mail as such. 
+* Let's call the first possibility a false positive, the second a false negative. 
+* Both are bad; are they bad in the same way?
+* Can you think of a case where it's the other way round - false positives being preferable there?
+   
+  
+
 Hypothesis testing: the setting
 ========================================================
 
@@ -1135,7 +1187,7 @@ Hypothesis testing: the logic (1)
     + For a special group of 64 participants (politicians, say) we obtain an average score of 27, with a standard deviation of 6.
     + How likely is it that the politicians are not a sample of the population overall?
     
-*  Using the CLT, the sample mean is approximately normally distributed, with a mean of $30$ and a standard error of $6/\sqrt{81} = 0.75$:
+*  Using the CLT, the sample mean is approximately normally distributed, with a mean of $30$ and a standard error of $6/\sqrt{64} = 0.75$:
 $$\bar X \sim N(30, 0.75)$$  
 * Now, for our sample mean to be real surprising, given the distribution it is said to come from, we want it to lie in either the _very_ lower or the _very_ upper part of this hypothetical distribution. 
 
@@ -1165,7 +1217,7 @@ Hypothesis testing: the logic (3)
     + $\bar X = 27 < 30 - 2.58*0.75 = 28.07$
 
 
-Hypothesis testing: commonly used Metrics
+Hypothesis testing: commonly used metrics
 ========================================================
 
 
@@ -1231,7 +1283,7 @@ The t distribution
 ========================================================
 
 * With small sample sizes, for normally distributed data, instead of the normal distribution, the $t$ distribution is used to construct confidence intervals and perform hypothesis testing.
-* Instead of by a mean and a standard deviation, the $t$ distribution is parameterized by the _degrees of freedom_.
+* Instead of by a mean and standard deviation, the $t$ distribution is parameterized by the _degrees of freedom_.
 * Compared with a normal, the $t$ distribution has thicker tails than the normal. 
 * The more degrees of freedom, the more like a normal the $t$ distribution gets.
 * Compare the $t$ distribution with the standard normal:
@@ -1253,7 +1305,7 @@ ggdistribution(dt, seq(-4, 4, 0.1), colour = 'cyan', p = p, df = 20)
 The t confidence interval
 ========================================================
 
-* The $t$ confidence interval is constructed analogously to that of the normal distribution ($\bar X \pm Z_{1-\alpha/2}   \sigma/\sqrt{n}$), namely
+* The $t$ confidence interval is constructed analogously to that of the normal distribution ($\bar X \pm z_{1-\alpha/2}   \sigma/\sqrt{n}$), namely
 
 $$\bar X \pm t_{n-1} S/\sqrt{n}$$
 * where  $t_{n-1}$ is the relevant quantile from the *t* distribution with $n-1$ degrees of freedom.
@@ -1339,6 +1391,19 @@ type:prompt
 <h1>Power</h1>
 
 
+
+Power: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* Until now, the type of error we've mainly been busy with was mistakenly rejecting $H_0$.
+* What if indeed $H_0$ were false, but we don't get a significant result, that is, we fail to reject $H_0$?
+* What can we do to enhance our chances to reject $H_0$, given it is really false?
+   
+  
+
 What is power?
 ========================================================
 
@@ -1376,7 +1441,7 @@ power.t.test(n = 11, delta = 1.2, sd = 0.75, sig.level = 0.05)
 Demo: Influence the power
 ========================================================
 
-Inspecting the effect of varying $\mu_1$, $sd$, $N$, and $alpha$
+Inspecting the effect of varying $\mu_1$, $sd$, $N$, and $alpha$: _power.R_
 
 
 

@@ -32,13 +32,23 @@ $$P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} = P(A)$$
 
 ### Bayes Theorem
 
+
+$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+
+where
+
 * Prior probability \(P(A)\)
 * Likelihood \(P(B|A)\)
 * Evidence \(P(B)\)
 * Posterior probability \(P(A|B)\)
 
-$$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
+&nbsp;
 
-* Classic example: Medical test
+Let's do the genius thing again.
+
+$P(genius ~|~ test\>positive) = \frac{P(test\>positive|genius) * P(genius)}{P(test\>positive)} =  \frac{P(test\>positive|genius) * P(genius)}{P(test\>positive|genius) * P(genius) + P(test\>positive|not\>a\>genius) * P(not\>a\>genius)}$
+
+$P(genius ~|~ test\>positive) = \frac{0.92 * 0.001}{0.92 * 0.001 + (1 - 0.99) * 0.999} = 0.08$
+
 
 &nbsp;
