@@ -1454,6 +1454,18 @@ type:prompt
              
 <h1>Effect size</h1>
 
+Effect size: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* You have a theory that you concentrate better at work when taking in 0.5 litres of [fill in favorite beverage here] per day.
+* You do an experiment to collect evidence against $H_0$, $H_0$ being that the beverage has _no_ effect on concentration.
+* The experiment is successful and you reject $H_0$. Is this really what you'd like to show?
+   
+  
+
 Effect size
 ========================================================
 
@@ -1476,7 +1488,7 @@ Cohen's d
 
 * Cohen's $d$ is the difference of means, in units of standard deviation:
 $$d = \frac{m_1 - m_2}{SD_{pooled}}$$ 
-* if not reported, Cohen's d may be calculated from the $t$ statistic:
+* if not reported, Cohen's $d$ may be calculated from the $t$ statistic:
 
 $$t = \frac{m_1 - m_2}{SD_{pooled} * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
 $$d = t * \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
@@ -1496,6 +1508,12 @@ Demo: Cohen's d
 
 http://rpsychologist.com/d3/cohend/
 
+
+
+Demo: Correlation coefficient
+==================================
+
+http://rpsychologist.com/d3/correlation/
 
 
 
@@ -1562,10 +1580,12 @@ $$P(A ~|~ B) = \frac{P(B|A) * P(A)}{P(B)}$$
 Bayesian updating (1)
 ========================================================
 
-* from Bayes theorem follows the idea of _Bayesian updating_
+&nbsp;
+
+* From Bayes theorem follows the idea of _Bayesian updating_
 * Let's do an example.
 
-Bayesian updating (2)
+Bayesian updating (2): prior distribution
 ========================================================
 
 We want to estimate the bias of a curious-looking coin we've never seen before, and we're skepticists, so we assume no value is more probable a priori than another. So, we choose a uniform distribution for our prior:
@@ -1578,21 +1598,19 @@ ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,1))
 
 That is, before ever seeing any data, we assume that every bias is equally likely.
 
-Bayesian updating (3)
+Bayesian updating (3): first throw
 ========================================================
 
 &nbsp;
 
-Now, we throw the coin once and obtain a tail. We now update our prior assumption to take into account the data, using Bayes theorem. 
+* We throw the coin once and obtain a tail. We now update our prior assumption to take into account the data, using Bayes theorem. 
 
-&nbsp;
+* In our conveniently chosen example, we don't have to compute integrals - we make use of a concept called _conjugacy_, which means that if we choose a prior distribution that is _conjugate_ to the distribution of the likelihood, the posterior is again of the same type as the prior.
 
-In our conveniently chosen example, we don't have to compute integrals - we make use of a concept called _conjugacy_, which means that if we choose a prior distribution that is _conjugate_ to the distribution of the likelihood, we obtain a new instance of the type of the prior distribution.
-
-Bayesian updating (4)
+Bayesian updating (4): first update
 ========================================================
 
-For our example of coin flips, the conjugate distributions are the beta and the binomial, and combining the beta prior with the binomial likelihood of coin flips we obtain a beta distribution again:
+* For our example of coin flips, the conjugate distributions are the beta and the binomial, and combining the beta prior with the binomial likelihood of coin flips we obtain a beta distribution again:
 
 ```{r}
 x <- seq(0,1,0.001)
@@ -1600,16 +1618,12 @@ x <- seq(0,1,0.001)
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,2))
 ```
 
-Bayesian updating (5)
+* As we see from the plot, now that we've seen one tail we can be sure of one thing: The coin cannot have two heads.
+
+Bayesian updating (5): second throw, second update
 ========================================================
 
-
-As we see from the plot, now that we've seen one tail we can be sure of one thing: The coin cannot have two heads.
-
-Bayesian updating (6)
-========================================================
-
-We flip again, and obtain another tail.
+* We flip again, and obtain another tail.
 
 ```{r}
 x <- seq(0,1,0.001)
@@ -1617,11 +1631,10 @@ x <- seq(0,1,0.001)
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(1,3))
 ```
 
-Bayesian updating (7)
+Bayesian updating (6): third throw, third update
 ========================================================
 
-
-Now, we get a head, and can rule out that there's just two tails:
+* Now, we get a head, and can rule out that there's just two tails:
 
 ```{r}
 x <- seq(0,1,0.001)
@@ -1629,10 +1642,10 @@ x <- seq(0,1,0.001)
 ggplot(data_frame(x), aes(x)) + stat_function(fun = dbeta, args = list(2,3))
 ```
 
-Bayesian updating (8)
+Bayesian updating (7): Go on throwing...
 ========================================================
 
-Let's throw some more, and look at how our belief develops:
+* Let's throw some more, and look at how our belief develops:
 
 
 ```{r}
@@ -1648,11 +1661,11 @@ do.call('grid.arrange', plots)
 ```
 
 
-Bayesian updating (9)
+Bayesian updating (8)
 ========================================================
 
 
-As we see, our belief gets more dense in the middle part of the distribution, but we're still pretty unsure about the true bias.
+* As we see, our belief gets more dense in the middle part of the distribution, but we're still pretty unsure about the true bias.
 
 
 
@@ -1709,6 +1722,12 @@ ggplot(data_frame(x = 1:100, y = positions[1:100]), aes(x,y)) + geom_point()
 ```
 
 
+Demo: MCMC using Stan
+========================================================
+
+http://mc-stan.org/
+
+
 
 Communicating uncertainty (1)
 ========================================================
@@ -1730,14 +1749,17 @@ Let's go through this. Assume that we've computed a posterior distribution over 
 ```{r}
 # compute the posterior on a grid of values ranging from 0 to 1
 p_grid <- seq(0,1, length.out = 1000)
+p_grid[1:10]
 # uniform prior
 prior <- rep(1,1000)
 # assume our data is 5 successes out of 13 
 # how likely is it to get 5 successes out of 13 with each of the probabilities in the grid?
 likelihood <- dbinom(5,13, prob=p_grid)
+likelihood[1:10]
 posterior <- prior * likelihood
 # normalized
 posterior <- posterior / sum(posterior)
+posterior[1:10]
 ```
 
 Communicating uncertainty (3)
@@ -1774,6 +1796,7 @@ Communicating uncertainty (5)
 
 ```{r}
 map <- p_grid[which.max(posterior)]
+map
 pred1 <- rbinom(1e4, size = 13, prob = map)
 pred2 <- rbinom(1e4, size = 13, prob = samples)
 ggplot(data_frame(pred1 = pred1, pred2 = pred2), aes(x = pred1)) + 
@@ -1794,7 +1817,7 @@ As we see, the predictions from the entire distribution are more spread out, thu
 Read on
 ========================================================
 
-As we don't have the time to cover more of Bayesian statistics, here are my recommendations:
+As we don't have the time to cover more of Bayesian statistics, here are some recommendations:
 
 * Statistical Rethinking, by Richard McElreath. Great for understanding the concepts, what really matters, and why it matters
 * Doing Bayesian Data Analysis, by John Kruschke. 
@@ -1811,6 +1834,19 @@ type:prompt
 &nbsp; 
              
 <h1>Linear regression</h1>
+
+
+Linear regression: your take
+========================================================
+incremental:true
+
+&nbsp;
+
+* You've found a correlation between width of cycle tracks and number of people commuting to work by bicycle  of $r=0.5$.
+* You'd like to predict the number of bicycle commuters given the average width of cycle tracks in a certain area.
+* In what cases might you be allowed to do this, and what are possible pitfalls?
+   
+  
 
 Why linear regression?
 ========================================================
@@ -1862,13 +1898,10 @@ Outliers...
 
 &nbsp;
 
-In linear regression, we will fit a line through the data points. Imagine the point in the upper right was not there.
-Would we still fit the same line? No.
-
-&nbsp;
-
-With datasets like this one, you are forced to think about how to handle points like this - points that highly influence the resulting fit. However, in this introductory course, we don't have time to discuss this.
-Instead, we focus on the mechanics of simple (one-predictor) linear regression. However, you've been warned ;-)
+* In linear regression, we will fit a line through the data points. 
+* Imagine the point in the upper right was not there. Would we still fit the same line? 
+* With datasets like this one, you have to think about how to handle points like this - points that highly influence the resulting fit. However, in this introductory course, we don't have time to discuss this.
+* Instead, we focus on the mechanics of simple (one-predictor) linear regression. However, you've been warned ;-)
 
 An optimization problem: Least Squares
 ========================================================
@@ -1926,12 +1959,13 @@ ggplot(mammals, aes(body, brain)) + geom_point() +
 How do we find the best line?
 ========================================================
 
-* Again, we use the _Least Squares_: we want to minimize
+*We use _Least Squares_: we want to minimize
 $$\sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_i))^2$$
 
 * Solving this yields
 
-$$\hat \beta_1 = Cor(y, x) \frac{sd(y)}{sd(x)} , \hat \beta_0 = \bar y - \hat \beta_1 \bar x$$
+$$\hat \beta_1 = Cor(y, x) \frac{sd(y)}{sd(x)}$$
+$$\hat \beta_0 = \bar y - \hat \beta_1 \bar x$$
 
 
 Linear models: lm()
@@ -2032,7 +2066,7 @@ Predictions (2)
 
 * However, let's not forget about uncertainty:
     + the parameter estimations are uncertain (uncertainty of the estimation)
-    + the predictions are even more uncertain (as $y$ is not a 100% determined by $x$)
+    + the predictions are even more uncertain (as $y$ is not completely determined by $x$)
 
 Confidence intervals vs. prediction intervals
 ========================================================
