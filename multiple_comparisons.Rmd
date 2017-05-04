@@ -6,7 +6,7 @@ output: html_document
 ## Multiple comparisons
 
 * If you perform multiple hypothesis tests, the chance of a type 1 error increases
-* Say you perform 20 tests, with alpha = .05: then the chance of _not_ committing a type 1 error is $.95^2 = 0.35$!
+* Say you perform 20 tests, with alpha = .05: then the chance of _not_ committing a type 1 error is $.95^{20} = 0.35$!
 * There are several methods of controlling the overall error rate, e.g.
     + Bonferroni correction
         + controls the family-wise error rate (FWER) at level alpha

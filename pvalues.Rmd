@@ -33,3 +33,9 @@ t.test(data, alternative = 'two.sided', mu = population_mean, conf.level = 0.95)
 * If an effect is statistically different from the value assumed under $H_0$ in a two-sided $t$-test with an alpha of .05 (p = .05), the 95% confidence interval will not include that value.
 * In our example, we have that the 95% confidence interval ranges from 999.18 to 1003.34 and thus, includes 1000.
 
+* Thus, the following are all synonymous:
+
+    + p < the chosen $\alpha$
+    + the effect is significant (on the chosen $\alpha$ - level)
+    + the $1-\alpha$ % confidence interval does not include the value assumed under $H_0$
+    

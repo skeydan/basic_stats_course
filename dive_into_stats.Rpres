@@ -723,6 +723,18 @@ minval = 3
 maxval = 7
 ggplot(data_frame(k), aes(k, dunif(k, minval, maxval))) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
   ggtitle("Uniform distribution example")
+```
+
+Uniform Distribution (3)
+========================================================
+class:small-code
+
+
+```{r, warning=FALSE, message=FALSE}
+n <- 10
+k <- seq(0,10,0.01)
+minval = 3
+maxval = 7
 ggplot(data_frame(k), aes(k, punif(k, minval, maxval))) + geom_line(color = "blue") + ylab("p = uniform(3,7)") +
   ggtitle("Corresponding cumulative distribution")
 ```
@@ -1377,8 +1389,22 @@ The meaning of p (2)
 P-values: relationship to confidence intervals
 ========================================================
 
+&nbsp;
+
 * If an effect is statistically different from the value assumed under $H_0$ in a two-sided $t$-test with an alpha of .05 (p = .05), the 95% confidence interval will not include that value.
 * In our example, we have that the 95% confidence interval ranges from 999.18 to 1003.34 and thus, includes 1000.
+
+
+Synonyms
+========================================================
+
+&nbsp;
+
+* Thus, the following are all synonymous:
+    + p < the chosen $\alpha$
+    + the effect is significant (on the chosen $\alpha$ - level)
+    + the $1-\alpha$ % confidence interval does not include the value assumed under $H_0$
+    
 
 
 ========================================================
@@ -1460,9 +1486,10 @@ incremental:true
 
 &nbsp;
 
-* You have a theory that you concentrate better at work when taking in 0.5 litres of [fill in favorite beverage here] per day.
+* You have a theory that you can concentrate better at work when taking in 0.5 litres of [fill in favorite beverage here] per day.
 * You do an experiment to collect evidence against $H_0$, $H_0$ being that the beverage has _no_ effect on concentration.
-* The experiment is successful and you reject $H_0$. Is this really what you'd like to show?
+* Yay! You've found a significant effect: Concentration score under influence of the beverage, as opposed to just water, is 0.02 points higher, and the difference is significant. 
+* Now - are you content? Is this really what you'd like to show?
    
   
 
@@ -1531,7 +1558,7 @@ What if we do several tests at once?
 ========================================================
 
 * If you perform multiple hypothesis tests, the chance of a type 1 error increases
-* Say you perform 20 tests, with alpha = .05: then the chance of _not_ committing a type 1 error is $.95^2 = 0.35$!
+* Say you perform 20 tests, with alpha = .05: then the chance of _not_ committing a type 1 error is $.95^{20} = 0.35$!
 * There are several methods of controlling the overall error rate, e.g.
     + Bonferroni correction
         + controls the family-wise error rate (FWER) at level alpha
@@ -1959,8 +1986,8 @@ ggplot(mammals, aes(body, brain)) + geom_point() +
 How do we find the best line?
 ========================================================
 
-*We use _Least Squares_: we want to minimize
-$$\sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_i))^2$$
+* We use _Least Squares_: we want to minimize
+$$\sum_{i=1}^n (y_i - (\hat \beta_0 + \hat \beta_1 x_i))^2$$
 
 * Solving this yields
 
