@@ -29,7 +29,7 @@ do.call('grid.arrange', plots)
 
 ### The Central Limit Theorem 
 
-* As sample size increases, the distribution of __averages__ of IID variables approaches the standard normal 
+* As sample size increases, the distribution of __averages__ of IID variables approaches the normal distribution
 * That is: $$\bar X_n \sim N(\mu, \sigma^2 / n)$$
 * Or: $$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$$
 * where the standard deviation divided by the square root of the sample size $$\sigma / \sqrt{n}$$ is the _standard error of the mean_.

@@ -7,9 +7,9 @@ output: html_document
 
 ### From the CLT to confidence intervals
 
-* As we saw, the sample mean of IID variables approaches a standard normal distribution:
+* As we saw, the sample mean of IID variables approaches a normal distribution:
 $$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$$
-* And we know that for a standard normal distribution,  ~ 95% of the density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
+* And we know that for a normal distribution,  ~ 95% of the density lies between $[\bar{x} - 2 sd, \bar{x} + 2 sd]$
 * So the probability that $\bar X$ lies between $\mu + 2 \sigma / \sqrt{n}$ and $\mu - 2 \sigma / \sqrt{n}$ is ~ 95%.
 * Therefore, 
 $\bar X \pm 2 \sigma /\sqrt{n}$
